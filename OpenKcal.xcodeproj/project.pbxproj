@@ -1,0 +1,825 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7BDBBB50E4A44D80051FF625 /* Pods_OpenKcal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89F9950F35BD7FF9688FD1B /* Pods_OpenKcal.framework */; };
+		B09B3D033DF9BD9DA9FEB1D3 /* Pods_OpenKcal_OpenKcalUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CE58CA2629E3261A3A3744 /* Pods_OpenKcal_OpenKcalUITests.framework */; };
+		EF047BFD544A42A08776A739 /* Pods_OpenKcalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFBE3F4830749EC1FB1621E /* Pods_OpenKcalTests.framework */; };
+		F46E0A652C89849D006F59D4 /* CompareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E0A642C89849D006F59D4 /* CompareViewController.swift */; };
+		F46E0A682C89968D006F59D4 /* SelecteCakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E0A672C89968D006F59D4 /* SelecteCakeViewController.swift */; };
+		F46E0A6B2C899862006F59D4 /* CakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E0A6A2C899862006F59D4 /* CakeData.swift */; };
+		F4858E4D2C8710C400A5B878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E4C2C8710C400A5B878 /* AppDelegate.swift */; };
+		F4858E4F2C8710C400A5B878 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E4E2C8710C400A5B878 /* SceneDelegate.swift */; };
+		F4858E512C8710C400A5B878 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E502C8710C400A5B878 /* ViewController.swift */; };
+		F4858E542C8710C400A5B878 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = F4858E532C8710C400A5B878 /* Base */; };
+		F4858E562C8710C600A5B878 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4858E552C8710C600A5B878 /* Assets.xcassets */; };
+		F4858E592C8710C600A5B878 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = F4858E582C8710C600A5B878 /* Base */; };
+		F4858E642C8710C600A5B878 /* OpenKcalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E632C8710C600A5B878 /* OpenKcalTests.swift */; };
+		F4858E6E2C8710C600A5B878 /* OpenKcalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E6D2C8710C600A5B878 /* OpenKcalUITests.swift */; };
+		F4858E702C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E6F2C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift */; };
+		F4858E7E2C87127400A5B878 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F4858E7D2C87127400A5B878 /* RealmSwift */; };
+		F4893A5B2C95745E00FFB1FF /* CreateCakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4893A5A2C95745E00FFB1FF /* CreateCakeViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F4858E602C8710C600A5B878 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4858E412C8710C400A5B878 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F4858E482C8710C400A5B878;
+			remoteInfo = OpenKcal;
+		};
+		F4858E6A2C8710C600A5B878 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4858E412C8710C400A5B878 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F4858E482C8710C400A5B878;
+			remoteInfo = OpenKcal;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		122CE5ECD96B5171D6EBE2BC /* Pods-OpenKcal-OpenKcalUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcal-OpenKcalUITests.debug.xcconfig"; path = "Target Support Files/Pods-OpenKcal-OpenKcalUITests/Pods-OpenKcal-OpenKcalUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		746724C775922A2391BAC143 /* Pods-OpenKcal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcal.release.xcconfig"; path = "Target Support Files/Pods-OpenKcal/Pods-OpenKcal.release.xcconfig"; sourceTree = "<group>"; };
+		A89F9950F35BD7FF9688FD1B /* Pods_OpenKcal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenKcal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0CE58CA2629E3261A3A3744 /* Pods_OpenKcal_OpenKcalUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenKcal_OpenKcalUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDFBE3F4830749EC1FB1621E /* Pods_OpenKcalTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenKcalTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC550E3CBF62A1498DB8CA06 /* Pods-OpenKcalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcalTests.release.xcconfig"; path = "Target Support Files/Pods-OpenKcalTests/Pods-OpenKcalTests.release.xcconfig"; sourceTree = "<group>"; };
+		E6A2FA5B4FADB585520E47E8 /* Pods-OpenKcal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcal.debug.xcconfig"; path = "Target Support Files/Pods-OpenKcal/Pods-OpenKcal.debug.xcconfig"; sourceTree = "<group>"; };
+		EA0F62FC06172C2AE1ABEE30 /* Pods-OpenKcalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcalTests.debug.xcconfig"; path = "Target Support Files/Pods-OpenKcalTests/Pods-OpenKcalTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F46E0A642C89849D006F59D4 /* CompareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareViewController.swift; sourceTree = "<group>"; };
+		F46E0A672C89968D006F59D4 /* SelecteCakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecteCakeViewController.swift; sourceTree = "<group>"; };
+		F46E0A6A2C899862006F59D4 /* CakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CakeData.swift; sourceTree = "<group>"; };
+		F4858E492C8710C400A5B878 /* OpenKcal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenKcal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4858E4C2C8710C400A5B878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F4858E4E2C8710C400A5B878 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		F4858E502C8710C400A5B878 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F4858E532C8710C400A5B878 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F4858E552C8710C600A5B878 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F4858E582C8710C600A5B878 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F4858E5A2C8710C600A5B878 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4858E5F2C8710C600A5B878 /* OpenKcalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenKcalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4858E632C8710C600A5B878 /* OpenKcalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenKcalTests.swift; sourceTree = "<group>"; };
+		F4858E692C8710C600A5B878 /* OpenKcalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenKcalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4858E6D2C8710C600A5B878 /* OpenKcalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenKcalUITests.swift; sourceTree = "<group>"; };
+		F4858E6F2C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenKcalUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F4893A5A2C95745E00FFB1FF /* CreateCakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCakeViewController.swift; sourceTree = "<group>"; };
+		F865D78033493385D53FC450 /* Pods-OpenKcal-OpenKcalUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcal-OpenKcalUITests.release.xcconfig"; path = "Target Support Files/Pods-OpenKcal-OpenKcalUITests/Pods-OpenKcal-OpenKcalUITests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F4858E462C8710C400A5B878 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4858E7E2C87127400A5B878 /* RealmSwift in Frameworks */,
+				7BDBBB50E4A44D80051FF625 /* Pods_OpenKcal.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4858E5C2C8710C600A5B878 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF047BFD544A42A08776A739 /* Pods_OpenKcalTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4858E662C8710C600A5B878 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B09B3D033DF9BD9DA9FEB1D3 /* Pods_OpenKcal_OpenKcalUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A83FA0788FC7A190AB308D67 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E6A2FA5B4FADB585520E47E8 /* Pods-OpenKcal.debug.xcconfig */,
+				746724C775922A2391BAC143 /* Pods-OpenKcal.release.xcconfig */,
+				122CE5ECD96B5171D6EBE2BC /* Pods-OpenKcal-OpenKcalUITests.debug.xcconfig */,
+				F865D78033493385D53FC450 /* Pods-OpenKcal-OpenKcalUITests.release.xcconfig */,
+				EA0F62FC06172C2AE1ABEE30 /* Pods-OpenKcalTests.debug.xcconfig */,
+				DC550E3CBF62A1498DB8CA06 /* Pods-OpenKcalTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		E0D4D66C6302DCE7A7F1B4B9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A89F9950F35BD7FF9688FD1B /* Pods_OpenKcal.framework */,
+				B0CE58CA2629E3261A3A3744 /* Pods_OpenKcal_OpenKcalUITests.framework */,
+				CDFBE3F4830749EC1FB1621E /* Pods_OpenKcalTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F46E0A662C8984A6006F59D4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F4858E502C8710C400A5B878 /* ViewController.swift */,
+				F46E0A642C89849D006F59D4 /* CompareViewController.swift */,
+				F46E0A672C89968D006F59D4 /* SelecteCakeViewController.swift */,
+				F4893A5A2C95745E00FFB1FF /* CreateCakeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		F46E0A692C8997F1006F59D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F46E0A6A2C899862006F59D4 /* CakeData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F4858E402C8710C400A5B878 = {
+			isa = PBXGroup;
+			children = (
+				F4858E4B2C8710C400A5B878 /* OpenKcal */,
+				F4858E622C8710C600A5B878 /* OpenKcalTests */,
+				F4858E6C2C8710C600A5B878 /* OpenKcalUITests */,
+				F4858E4A2C8710C400A5B878 /* Products */,
+				A83FA0788FC7A190AB308D67 /* Pods */,
+				E0D4D66C6302DCE7A7F1B4B9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F4858E4A2C8710C400A5B878 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4858E492C8710C400A5B878 /* OpenKcal.app */,
+				F4858E5F2C8710C600A5B878 /* OpenKcalTests.xctest */,
+				F4858E692C8710C600A5B878 /* OpenKcalUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4858E4B2C8710C400A5B878 /* OpenKcal */ = {
+			isa = PBXGroup;
+			children = (
+				F46E0A692C8997F1006F59D4 /* Model */,
+				F46E0A662C8984A6006F59D4 /* ViewController */,
+				F4858E4C2C8710C400A5B878 /* AppDelegate.swift */,
+				F4858E4E2C8710C400A5B878 /* SceneDelegate.swift */,
+				F4858E522C8710C400A5B878 /* Main.storyboard */,
+				F4858E552C8710C600A5B878 /* Assets.xcassets */,
+				F4858E572C8710C600A5B878 /* LaunchScreen.storyboard */,
+				F4858E5A2C8710C600A5B878 /* Info.plist */,
+			);
+			path = OpenKcal;
+			sourceTree = "<group>";
+		};
+		F4858E622C8710C600A5B878 /* OpenKcalTests */ = {
+			isa = PBXGroup;
+			children = (
+				F4858E632C8710C600A5B878 /* OpenKcalTests.swift */,
+			);
+			path = OpenKcalTests;
+			sourceTree = "<group>";
+		};
+		F4858E6C2C8710C600A5B878 /* OpenKcalUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F4858E6D2C8710C600A5B878 /* OpenKcalUITests.swift */,
+				F4858E6F2C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift */,
+			);
+			path = OpenKcalUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F4858E482C8710C400A5B878 /* OpenKcal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4858E732C8710C600A5B878 /* Build configuration list for PBXNativeTarget "OpenKcal" */;
+			buildPhases = (
+				05D76A6181DBF5427E784B8B /* [CP] Check Pods Manifest.lock */,
+				F4858E452C8710C400A5B878 /* Sources */,
+				F4858E462C8710C400A5B878 /* Frameworks */,
+				F4858E472C8710C400A5B878 /* Resources */,
+				6DA5F90E87AF7ABD60FD8F2C /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenKcal;
+			packageProductDependencies = (
+				F4858E7D2C87127400A5B878 /* RealmSwift */,
+			);
+			productName = OpenKcal;
+			productReference = F4858E492C8710C400A5B878 /* OpenKcal.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F4858E5E2C8710C600A5B878 /* OpenKcalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4858E762C8710C600A5B878 /* Build configuration list for PBXNativeTarget "OpenKcalTests" */;
+			buildPhases = (
+				8F8511239CA6DF8D58DAAEE6 /* [CP] Check Pods Manifest.lock */,
+				F4858E5B2C8710C600A5B878 /* Sources */,
+				F4858E5C2C8710C600A5B878 /* Frameworks */,
+				F4858E5D2C8710C600A5B878 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F4858E612C8710C600A5B878 /* PBXTargetDependency */,
+			);
+			name = OpenKcalTests;
+			productName = OpenKcalTests;
+			productReference = F4858E5F2C8710C600A5B878 /* OpenKcalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F4858E682C8710C600A5B878 /* OpenKcalUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4858E792C8710C600A5B878 /* Build configuration list for PBXNativeTarget "OpenKcalUITests" */;
+			buildPhases = (
+				E4854AD27AC798306867D8A2 /* [CP] Check Pods Manifest.lock */,
+				F4858E652C8710C600A5B878 /* Sources */,
+				F4858E662C8710C600A5B878 /* Frameworks */,
+				F4858E672C8710C600A5B878 /* Resources */,
+				1431BE65DD10DF120196E7A6 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F4858E6B2C8710C600A5B878 /* PBXTargetDependency */,
+			);
+			name = OpenKcalUITests;
+			productName = OpenKcalUITests;
+			productReference = F4858E692C8710C600A5B878 /* OpenKcalUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F4858E412C8710C400A5B878 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					F4858E482C8710C400A5B878 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					F4858E5E2C8710C600A5B878 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = F4858E482C8710C400A5B878;
+					};
+					F4858E682C8710C600A5B878 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = F4858E482C8710C400A5B878;
+					};
+				};
+			};
+			buildConfigurationList = F4858E442C8710C400A5B878 /* Build configuration list for PBXProject "OpenKcal" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F4858E402C8710C400A5B878;
+			packageReferences = (
+				F4858E7C2C87127400A5B878 /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
+			productRefGroup = F4858E4A2C8710C400A5B878 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F4858E482C8710C400A5B878 /* OpenKcal */,
+				F4858E5E2C8710C600A5B878 /* OpenKcalTests */,
+				F4858E682C8710C600A5B878 /* OpenKcalUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F4858E472C8710C400A5B878 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4858E562C8710C600A5B878 /* Assets.xcassets in Resources */,
+				F4858E592C8710C600A5B878 /* Base in Resources */,
+				F4858E542C8710C400A5B878 /* Base in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4858E5D2C8710C600A5B878 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4858E672C8710C600A5B878 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		05D76A6181DBF5427E784B8B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OpenKcal-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1431BE65DD10DF120196E7A6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OpenKcal-OpenKcalUITests/Pods-OpenKcal-OpenKcalUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OpenKcal-OpenKcalUITests/Pods-OpenKcal-OpenKcalUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OpenKcal-OpenKcalUITests/Pods-OpenKcal-OpenKcalUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DA5F90E87AF7ABD60FD8F2C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OpenKcal/Pods-OpenKcal-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OpenKcal/Pods-OpenKcal-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OpenKcal/Pods-OpenKcal-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8F8511239CA6DF8D58DAAEE6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OpenKcalTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4854AD27AC798306867D8A2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OpenKcal-OpenKcalUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F4858E452C8710C400A5B878 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F46E0A652C89849D006F59D4 /* CompareViewController.swift in Sources */,
+				F46E0A6B2C899862006F59D4 /* CakeData.swift in Sources */,
+				F4893A5B2C95745E00FFB1FF /* CreateCakeViewController.swift in Sources */,
+				F4858E512C8710C400A5B878 /* ViewController.swift in Sources */,
+				F4858E4D2C8710C400A5B878 /* AppDelegate.swift in Sources */,
+				F4858E4F2C8710C400A5B878 /* SceneDelegate.swift in Sources */,
+				F46E0A682C89968D006F59D4 /* SelecteCakeViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4858E5B2C8710C600A5B878 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4858E642C8710C600A5B878 /* OpenKcalTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4858E652C8710C600A5B878 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4858E702C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift in Sources */,
+				F4858E6E2C8710C600A5B878 /* OpenKcalUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F4858E612C8710C600A5B878 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F4858E482C8710C400A5B878 /* OpenKcal */;
+			targetProxy = F4858E602C8710C600A5B878 /* PBXContainerItemProxy */;
+		};
+		F4858E6B2C8710C600A5B878 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F4858E482C8710C400A5B878 /* OpenKcal */;
+			targetProxy = F4858E6A2C8710C600A5B878 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F4858E522C8710C400A5B878 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4858E532C8710C400A5B878 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F4858E572C8710C600A5B878 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4858E582C8710C600A5B878 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F4858E712C8710C600A5B878 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F4858E722C8710C600A5B878 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F4858E742C8710C600A5B878 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6A2FA5B4FADB585520E47E8 /* Pods-OpenKcal.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5Z933926NX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OpenKcal/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JuHyung.OpenKcal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F4858E752C8710C600A5B878 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 746724C775922A2391BAC143 /* Pods-OpenKcal.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5Z933926NX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OpenKcal/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JuHyung.OpenKcal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F4858E772C8710C600A5B878 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA0F62FC06172C2AE1ABEE30 /* Pods-OpenKcalTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5Z933926NX;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JuHyung.OpenKcalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenKcal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenKcal";
+			};
+			name = Debug;
+		};
+		F4858E782C8710C600A5B878 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC550E3CBF62A1498DB8CA06 /* Pods-OpenKcalTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5Z933926NX;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JuHyung.OpenKcalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenKcal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenKcal";
+			};
+			name = Release;
+		};
+		F4858E7A2C8710C600A5B878 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 122CE5ECD96B5171D6EBE2BC /* Pods-OpenKcal-OpenKcalUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5Z933926NX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JuHyung.OpenKcalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = OpenKcal;
+			};
+			name = Debug;
+		};
+		F4858E7B2C8710C600A5B878 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F865D78033493385D53FC450 /* Pods-OpenKcal-OpenKcalUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5Z933926NX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JuHyung.OpenKcalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = OpenKcal;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F4858E442C8710C400A5B878 /* Build configuration list for PBXProject "OpenKcal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4858E712C8710C600A5B878 /* Debug */,
+				F4858E722C8710C600A5B878 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4858E732C8710C600A5B878 /* Build configuration list for PBXNativeTarget "OpenKcal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4858E742C8710C600A5B878 /* Debug */,
+				F4858E752C8710C600A5B878 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4858E762C8710C600A5B878 /* Build configuration list for PBXNativeTarget "OpenKcalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4858E772C8710C600A5B878 /* Debug */,
+				F4858E782C8710C600A5B878 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4858E792C8710C600A5B878 /* Build configuration list for PBXNativeTarget "OpenKcalUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4858E7A2C8710C600A5B878 /* Debug */,
+				F4858E7B2C8710C600A5B878 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F4858E7C2C87127400A5B878 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F4858E7D2C87127400A5B878 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4858E7C2C87127400A5B878 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = F4858E412C8710C400A5B878 /* Project object */;
+}
