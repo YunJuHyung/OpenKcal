@@ -24,8 +24,8 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
             cakeDataCloserType(selectedCake)
         }
         // 선택된 케이크 데이터를 sender로 전달하여 세그웨이 수행
-        navigationController?.popViewController(animated: true)
         print("sender: selectedCake")
+        navigationController?.popViewController(animated: true)
     }
 
     

@@ -8,15 +8,49 @@
 import UIKit
 
 
-class CompareViewController: UIViewController,UIPointerInteractionDelegate {
+class CompareViewController: UIViewController,UIPointerInteractionDelegate,UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        //어차피 단일 데이터만 보여줘서 1로 해도됨
+        return 1
+        
+//        return userPickCakeSelectVCValue.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "resuableCell", for: indexPath)
+     
+        if let currentVC = navigationController?.viewControllers.last as? SelectCakeViewController {
+            currentVC.cakeDataCloserType = { [weak self] selectedCake in
+                cell.textLabel?.text = "이름: \(selectedCake.name)"
+                cell.textLabel?.text = "맛: \(selectedCake.flavor)"
+                cell.textLabel?.text = "칼로리: \(selectedCake.kcal)"
+                cell.textLabel?.text = "당: \(selectedCake.sugar)"
+                cell.textLabel?.text = "포화지방: \(selectedCake.saturatedFat)"
+                cell.textLabel?.text = "단백질: \(selectedCake.protein)"
+                    }
+                }
+        return cell
+    }
+    
     
     @IBOutlet weak var cakeImageView1: UIImageView!
     @IBOutlet weak var cakeImageView2: UIImageView!
     @IBOutlet weak var firstCakeImageBackgroundView: UIView!
     @IBOutlet weak var secondCakeImageBackgroundView: UIView!
     @IBOutlet weak var cakeTableView1: UITableView!
- //   let modelFile = CakeData()
     
+    @IBOutlet weak var leftTableView: UITableView!
+    
+ 
+    
+//    var userPickCakeSelectVCValue: [CakeData] = [] {
+//        didSet {
+//            print("이것은 코드에서 나는 소리가 아니여 \(userPickCakeSelectVCValue)")
+//        }
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,7 +116,7 @@ class CompareViewController: UIViewController,UIPointerInteractionDelegate {
     func navigateToSelectCakeViewController() {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         //viewController 인스턴스화
-        let vc = mainStoryboard.instantiateViewController(identifier: "SelecteCakeViewController") as! SelecteCakeViewController
+        let vc = mainStoryboard.instantiateViewController(identifier: "SelecteCakeViewController") as! SelectCakeViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
