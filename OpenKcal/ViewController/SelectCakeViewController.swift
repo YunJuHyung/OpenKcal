@@ -10,13 +10,42 @@ import UIKit
 import RealmSwift
 import SwiftUI
 
+//케이크의 카테고리를 필터링해서 선택하는 화면입니다.
 class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+    
+    var filteredCakes: [CakeData] = [] // 필터링된 케이크 데이터를 저장할 배열
+    let cakeData = CakeData()
+    let imageView = UIImageView()
+    
+    // dropdown에 들어가는 text
+    let dropDownBrandMenu = [
+        "브랜드 선택",
+        "스타벅스",
+        "투썸플레이스",
+        "이디야",
+    ]
+    let dropDownFlavorMenu = [
+        "케이크 맛 선택",
+        "초코",
+        "과일",
+        "치즈",
+    ]
+    
+    @IBOutlet weak var cakeListTableView: UITableView!
+    
+    @IBOutlet weak var BrandDropDownView: UIView!
+    @IBOutlet weak var flavorDropDownView: UIView!
+    @IBOutlet weak var brandDisplayLabel: UILabel!
+    @IBOutlet weak var flavorDisplayLabel: UILabel!
+    
+    @IBOutlet weak var brandDropDownButton: UIButton!
+    @IBOutlet weak var flavorDropDownButton: UIButton!
+    var cakeDataCloserType: ((CakeData) -> Void)?
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredCakes.count
     }
     
-    var cakeDataCloserType: ((CakeData) -> Void)?
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCake = filteredCakes[indexPath.row]
         
@@ -27,7 +56,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         print("sender: selectedCake")
         navigationController?.popViewController(animated: true)
     }
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -36,66 +65,36 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         // 필터링된 케이크 데이터를 셀에 표시
         let cake = filteredCakes[indexPath.row]
         
-//        print("-------------------------------------------")
-//        print("분기점")
-//        print(cake)
         cell.textLabel?.text = cake.name
-        //아래 내용은 안나오긴함 detail칸 안만들었음
+        //MARK: (수정필요) 아래 내용은 안나오긴함 detail칸 안만들었음
         cell.detailTextLabel?.text = "Flavor: \(cake.flavor), Kcal: \(cake.kcal)"
         
         return cell
     }
     
     //prepare에서 내가 보내줄건 filteredCakes: [CakeData] or cake: CakeData
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        print("prepare")
-//        super.prepare(for: segue, sender: sender)
-//        print(segue.destination)
-//        if segue.identifier == "CompareViewController" {
-//            if let compareVC = segue.destination as? CompareViewController {
-//                if let selectedCake = sender as? CakeData {
-//                    compareVC.userPickCakeSelectVCValue = [selectedCake]
-//                }
-//            }
-//        }
-//    }
-        
-    
-    let cakeData = CakeData()
-    let imageView = UIImageView()
-    
-    
-    //    let cakeDataModel = CakeData()
-    var filteredCakes: [CakeData] = [] // 필터링된 케이크 데이터를 저장할 배열
-    @IBOutlet weak var cakeListTableView: UITableView!
-    
-    @IBOutlet weak var BrandDropDownView: UIView!
-    @IBOutlet weak var flavorDropDownView: UIView!
-    @IBOutlet weak var brandDisplayLabel: UILabel!
-    @IBOutlet weak var flavorDisplayLabel: UILabel!
-    
-    @IBOutlet weak var brandDropDownButton: UIButton!
-    @IBOutlet weak var flavorDropDownButton: UIButton!
-    
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //        print("prepare")
+    //        super.prepare(for: segue, sender: sender)
+    //        print(segue.destination)
+    //        if segue.identifier == "CompareViewController" {
+    //            if let compareVC = segue.destination as? CompareViewController {
+    //                if let selectedCake = sender as? CakeData {
+    //                    compareVC.userPickCakeSelectVCValue = [selectedCake]
+    //                }
+    //            }
+    //        }
+    //    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //       cakeListTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CakeDataCell")
-        
-        //        cakeListTableView.dataSource = self
-        //        cakeListTableView.delegate = self
-        //tableview 를 사용하기 위해 내가 가져온 data는 나 자신을 표시
-        
-        //  classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
         cakeListTableView.delegate = self
         cakeListTableView.dataSource = self
-        
-        
         
     }
     
     // tableview 가 비어있을시 이미지와 라벨로 카테고리를 선택하게 유도할려고 했음
+    // tableview에는 이미지 덮어씌우기 불가능
     func defaultImageSetting() {
         imageView.image = UIImage(named: "smileAnimeImage") // 이미지 이름
         
@@ -126,36 +125,36 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         self.flavorDropDownView.layer.cornerRadius = 20
         self.flavorDropDownView.layer.masksToBounds = true
     }
-    let dropDownBrandMenu = [
-        "브랜드 선택",
-        "스타벅스",
-        "투썸플레이스",
-        "이디야",
-    ]
-    let dropDownFlavorMenu = [
-        "케이크 맛 선택",
-        "초코",
-        "과일",
-        "치즈",
-    ]
-    //추후에 any로 다시 설정하도 범위를 view자체로 확대할 예정
+    
+    
     @IBAction func clickDropDownAction(_ sender: UIButton) {
         
         
-        let dropDownView = DropDown() // DropDown 생성
+        let dropDownView = DropDown() // DropDown 인스턴스 생성
         
         
         dropDownView.cellHeight = 40 // 각 칸의 높이
         dropDownView.backgroundColor = .systemOrange
-        // MARK: - 칸별 구분선의 x좌표가 bottomOffset을 따라가지 못함
+        // MARK: - (수정필요) 칸별 구분선의 x좌표가 bottomOffset을 따라가지 못함
         dropDownView.separatorColor = .black // 각 칸별 구분선 색상
         dropDownView.textFont = .systemFont(ofSize: 12)// 칸별 폰트
         dropDownView.direction = .bottom // 드랍 다운 방향
         dropDownView.layer.cornerRadius = 20 // 드롭다운의 모서리를 둥글게 설정
-        dropDownView.layer.masksToBounds = true // cornerRadius가 적용되도록 설정
+        dropDownView.layer.masksToBounds = true;
+        filterDropDownButton(sender, dropDownView)
+        
+        dropDownView.animationduration = 0.2 //드롭 다운 애니메이션 시간
+        dropDownView.show()
         
         
-        if sender == brandDropDownButton {
+    }
+    
+    //MARK: clickDropDownAction의 filtering이벤트
+    fileprivate func filterDropDownButton(_ sender: UIButton, _ dropDownView: DropDown) {
+        
+        //MARK: (수정사항: switch로 풀어보기)brandDropDown 이벤트 클릭해서 호출시
+        switch sender {
+        case brandDropDownButton:
             dropDownView.dataSource = self.dropDownBrandMenu // 어떤 데이터를 보여줄건지
             // 어느 뷰 위치에 넣을것인지
             
@@ -169,13 +168,9 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                 
                 
                 classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
-                //                print("item 확인용1 \(item)")
-                //                classifyByCategoires(selectedBrand: item, selectedFlavor: nil)
-                //                print("item 확인용2 \(item)")
             }
-            
-        }
-        if sender == flavorDropDownButton {
+        
+        case flavorDropDownButton :
             dropDownView.dataSource = self.dropDownFlavorMenu // 어떤 데이터를 보여줄건지
             
             dropDownView.anchorView = self.flavorDisplayLabel
@@ -187,30 +182,16 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                 self.flavorDisplayLabel.text = item
                 
                 classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
-                
-                
-                //                print("item 확인용1 \(item)")
-                //                classifyByCategoires(selectedBrand: nil, selectedFlavor: item)
-                //                print("item 확인용2 \(item)")
+
             }
-            
+
+        default:
+            print("default messages")
         }
-        //        if brandDisplayLabel.text?.isEmpty != true && flavorDisplayLabel.text?.isEmpty != true{
-        //            print("원 클릭")
-        //            classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
-        
-        
-        dropDownView.animationduration = 0.2 //드롭 다운 애니메이션 시간
-        dropDownView.show()
-        //브랜드별 케이크 데이터 필터링
-        //현재 카테고리의 아이템이 무엇인지 찾기
         
     }
-    
-    
-    //MARK: -- clickDropDownAction의 카테고리 이벤트
-    
-    
+
+    //MARK: -- after filterDropDownButton set filtering tableCellData 메소드
     func classifyByCategoires(selectedBrand: String?, selectedFlavor: String?) {
         print("들어오는지 확인")
         
@@ -234,7 +215,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         }
         
         if selectedBrand == exceptionHandlingBrandString &&
-             selectedFlavor == exceptionHandlingFlavorString {
+            selectedFlavor == exceptionHandlingFlavorString {
             
             print("테이블 빈처리")
             // 존재하지 않는 조건을 필터링하여 빈 Results를 생성 항상 false를 만들어냄 -> 값이 안나옴

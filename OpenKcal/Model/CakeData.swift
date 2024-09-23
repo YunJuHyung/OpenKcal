@@ -43,12 +43,12 @@ class CakeData: Object {
     // 케이크 정보 생성
     func createCakeData(nameData: String?, brandData: String?, flavorData: String?, kcalData: String?, saturatedFatData: String?, sugarData: String?, proteinData: String?) {
         let realm = try! Realm()
-        print("2222222222222222")
+        print(#fileID, #function, #line, "creaCakeData func들어오는지 확인")
         
         
         // CakeData 객체 생성 및 데이터 할당
         let cake = CakeData()
-
+        
         cake.name = nameData ?? ""
         cake.brand = brandData ?? ""
         cake.flavor = flavorData ?? ""
@@ -58,7 +58,7 @@ class CakeData: Object {
         cake.protein = proteinData ?? ""
         
         // Realm에 저장
-        print("33333333333")
+        print(#fileID, #function, #line, "create do - catch문 들어가기직전")
         do {
             try realm.write {
                 realm.add(cake)
@@ -76,23 +76,6 @@ class CakeData: Object {
         
         var filteredData = realm.objects(CakeData.self)
         
-        
-        /*
-         // 브랜드
-         let dropDownBrandMenu = [
-             "스타벅스",
-             "투썸 플레이스",
-             "이디야",
-         ]
-         // 케이크 맛 종류
-         let dropDownFlavorMenu = [
-             "초코",
-             "과일",
-             "치즈",
-         ]
-         */
-        
-        // 필터링 조건 추가 (옵셔널 파라미터 처리)
         if let name = name, !name.isEmpty {
             filteredData = filteredData.filter("name CONTAINS[c] %@", name)
         }
@@ -114,26 +97,4 @@ class CakeData: Object {
         
     }
 }
-    
-//    //delete 미구현 상태
-////    func deleteCakeData() {
-////        // All modifications to a realm must happen in a write block.
-////        
-////        // Get all todos in the realm
-//
-////        let todos = realm.objects(CakeData.self)
-////
-////        
-////        let todosInProgress = todos.where {
-////            //선택된 케이크의 이름
-////            $0.status == "InProgress"
-////        }
-////        print("A list of all todos in progress: \(todosInProgress)")
-////
-////        let todoToDelete = todos[0]
-////        try! realm.write {
-////            // Delete the Todo.
-////            realm.delete(todoToDelete)
-////        }
-////    }
-//}
+

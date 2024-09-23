@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+// 앱실행시 보여지는 화면입니다 
 class MainViewController: UIViewController {
     
     @IBOutlet weak var moveToCompareViewButton: UIButton!
@@ -18,10 +18,10 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        customStyleFrontImage()
+        makeRoundlyFrontImage()
     }
     
-    func customStyleFrontImage() {
+    func makeRoundlyFrontImage() {
         frontCakeImageVIew.layer.cornerRadius = 15
         frontCakeImageVIew.mask?.layer.masksToBounds = true
         moveToCompareViewButton.tintColor = .systemPurple

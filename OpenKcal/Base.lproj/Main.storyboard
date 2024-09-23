@@ -24,7 +24,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="hUN-2y-65k"/>
                                 </constraints>
-                                <color key="tintColor" systemColor="systemPurpleColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled">
                                     <attributedString key="attributedTitle">
@@ -34,6 +33,7 @@
                                             </attributes>
                                         </fragment>
                                     </attributedString>
+                                    <color key="baseBackgroundColor" systemColor="systemPurpleColor"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <segue destination="IzU-96-Gvx" kind="show" id="3iD-e0-Wt7"/>
@@ -378,11 +378,11 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="AXd-Dv-Hgy">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="AXd-Dv-Hgy" userLabel="Right Table View">
                                                 <rect key="frame" x="194.66666666666663" y="0.0" width="174.33333333333337" height="150"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="GvL-Xg-EVS">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="resuableCell" id="GvL-Xg-EVS" userLabel="RIght Table View Cell">
                                                         <rect key="frame" x="0.0" y="50" width="174.33333333333337" height="44.666667938232422"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GvL-Xg-EVS" id="sga-yR-6rE">
@@ -432,6 +432,7 @@
                         <outlet property="cakeImageView2" destination="wLi-6O-ito" id="9Dp-cq-9fj"/>
                         <outlet property="firstCakeImageBackgroundView" destination="Nk1-pb-1hT" id="jMr-ER-AC6"/>
                         <outlet property="leftTableView" destination="LJA-XX-CgU" id="8Kz-IJ-DbO"/>
+                        <outlet property="rightTableView" destination="AXd-Dv-Hgy" id="4Ey-p0-015"/>
                         <outlet property="secondCakeImageBackgroundView" destination="Diu-PM-H4G" id="lL3-Ve-0Kl"/>
                     </connections>
                 </viewController>
