@@ -23,6 +23,8 @@ class MainViewController: UIViewController {
     
     func customStyleFrontImage() {
         frontCakeImageVIew.layer.cornerRadius = 15
+        frontCakeImageVIew.mask?.layer.masksToBounds = true
+        moveToCompareViewButton.tintColor = .systemPurple
         
         
     }

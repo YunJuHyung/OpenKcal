@@ -209,28 +209,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     
     
     //MARK: -- clickDropDownAction의 카테고리 이벤트
-    func classifyByBrand(selectedBrand: String) {
-        let realm = try! Realm()
-        
-        let filteredData = realm.objects(CakeData.self).filter("brand == %@", selectedBrand)
-        
-        // 필터링된 데이터를 배열에 저장
-        self.filteredCakes = Array(filteredData)
-        // TableView 리로드
-        self.cakeListTableView.reloadData()
-    }
     
-    func classifyByFlavor(selectedFlavor: String) {
-        let realm = try! Realm()
-        
-        let filteredData = realm.objects(CakeData.self).filter("flavor == %@", selectedFlavor)
-        
-        // 필터링된 데이터를 배열에 저장
-        self.filteredCakes = Array(filteredData)
-        
-        // TableView 리로드
-        self.cakeListTableView.reloadData()
-    }
     
     func classifyByCategoires(selectedBrand: String?, selectedFlavor: String?) {
         print("들어오는지 확인")
@@ -239,9 +218,6 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         var filteredData = realm.objects(CakeData.self)
         let exceptionHandlingBrandString: String = "브랜드 선택"
         let exceptionHandlingFlavorString: String = "케이크 맛 선택"
-        imageView.isHidden = true
-        
-        //is.Empty가 사실상 제역할을 못함
         
         //가독성을 위해 옵셔널 바인딩을 사용
         if let selectedBrand = selectedBrand, selectedBrand != exceptionHandlingBrandString  {
@@ -264,31 +240,6 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
             // 존재하지 않는 조건을 필터링하여 빈 Results를 생성 항상 false를 만들어냄 -> 값이 안나옴
             filteredData = filteredData.filter("brand == %@", String(selectedBrand ?? ""))
         }
-        // set배열로 중복 데이터 저장 가능 {
-        //        var seenNames = Set<String>()
-        //        //공통된 이름 추출
-        //        let commonName = filteredData.map {$0.name}
-        //        print("filteredData.map {$0.name} = \(filteredData.map {$0.name})")
-        //        print("commonName = \(commonName)")
-        //
-        //        var checkCommonName: [String] = []
-        //        for name in commonName {
-        //            checkCommonName.append(name)
-        //            print("커먼 닉네임의 네임 = \(name)")
-        //        }
-        //        for index in filteredData {
-        //            if seenNames.contains(checkCommonName) {
-        //                filteredCakes1.append(index)
-        //                //확인용
-        //                print("filteredCakes1 확인용 = \(filteredCakes1.append(index))")
-        //            }
-        //            else {
-        //                seenNames.insert(index.name)
-        //                //확인용
-        //                print("seenNames 확인용 = \(index.name)")
-        //            }
-        //        }
-        //}
         self.filteredCakes = Array(filteredData)
         print(" 데이터 체크용 프린트 \(filteredCakes)")
         self.cakeListTableView.reloadData()

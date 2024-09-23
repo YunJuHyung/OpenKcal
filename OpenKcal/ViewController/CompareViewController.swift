@@ -10,10 +10,32 @@ import UIKit
 
 class CompareViewController: UIViewController,UIPointerInteractionDelegate,UITableViewDataSource {
     
+    var selectedCake: CakeData? // 선택된 케이크를 저장할 프로퍼티
+
+        func navigateToSelectCakeViewController() {
+            if let selectCakeVC = storyboard?.instantiateViewController(withIdentifier: "SelectCakeViewController") as? SelectCakeViewController {
+                
+                // 클로저 설정: 케이크가 선택되면 이 클로저가 실행됨
+                selectCakeVC.cakeDataCloserType = { [weak self] selectedCake in
+                    // 선택된 케이크 데이터를 저장
+                    self?.selectedCake = selectedCake
+                    self?.leftTableView.reloadData()
+                    
+                    // 필요한 로직 수행 (ex. 테이블 업데이트)
+                    print("선택된 케이크: \(selectedCake.name)")
+                }
+                
+                // 네비게이션을 통해 화면 전환
+                navigationController?.pushViewController(selectCakeVC, animated: true)
+            }
+        }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         //어차피 단일 데이터만 보여줘서 1로 해도됨
-        return 1
+        //미리 선택되는 cell이 안생기게 합니다
+        return selectedCake != nil ? 1 : 0
+        
         
 //        return userPickCakeSelectVCValue.count
     }
@@ -21,19 +43,24 @@ class CompareViewController: UIViewController,UIPointerInteractionDelegate,UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "resuableCell", for: indexPath)
-     
-        if let currentVC = navigationController?.viewControllers.last as? SelectCakeViewController {
-            currentVC.cakeDataCloserType = { [weak self] selectedCake in
-                cell.textLabel?.text = "이름: \(selectedCake.name)"
-                cell.textLabel?.text = "맛: \(selectedCake.flavor)"
-                cell.textLabel?.text = "칼로리: \(selectedCake.kcal)"
-                cell.textLabel?.text = "당: \(selectedCake.sugar)"
-                cell.textLabel?.text = "포화지방: \(selectedCake.saturatedFat)"
-                cell.textLabel?.text = "단백질: \(selectedCake.protein)"
+        print("!11111")
+        if let cake = self.selectedCake {
+            print("cake 에 대한 정보: \(cake)")
+                cell.textLabel?.numberOfLines = 0
+                cell.textLabel?.text = """
+                이름: \(cake.name)
+                맛: \(cake.flavor)
+                칼로리: \(cake.kcal)
+                당: \(cake.sugar)
+                포화지방: \(cake.saturatedFat)
+                단백질: \(cake.protein)
+                """
                     }
-                }
+                
         return cell
     }
+    
+    
     
     
     @IBOutlet weak var cakeImageView1: UIImageView!
@@ -60,6 +87,7 @@ class CompareViewController: UIViewController,UIPointerInteractionDelegate,UITab
         addPlusImage(firstCakeImageBackgroundView)
         addPlusImage(secondCakeImageBackgroundView)
         setupImageView()
+        leftTableView.dataSource = self
         
         }
     
@@ -113,12 +141,12 @@ class CompareViewController: UIViewController,UIPointerInteractionDelegate,UITab
        }
 
     
-    func navigateToSelectCakeViewController() {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        //viewController 인스턴스화
-        let vc = mainStoryboard.instantiateViewController(identifier: "SelecteCakeViewController") as! SelectCakeViewController
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    func navigateToSelectCakeViewController() {
+//        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//        //viewController 인스턴스화
+//        let vc = mainStoryboard.instantiateViewController(identifier: "SelecteCakeViewController") as! SelectCakeViewController
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
     
     @objc private func imageViewTapped1() {
         // 터치 이벤트 처리
