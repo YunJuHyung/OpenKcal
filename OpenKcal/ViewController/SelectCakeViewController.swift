@@ -27,13 +27,13 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     let dropDownFlavorMenu = [
         "케이크 맛 선택",
         "초코",
-        "과일",
+        "생크림",
         "치즈",
     ]
     
     @IBOutlet weak var cakeListTableView: UITableView!
     
-    @IBOutlet weak var BrandDropDownView: UIView!
+    @IBOutlet weak var brandDropDownView: UIView!
     @IBOutlet weak var flavorDropDownView: UIView!
     @IBOutlet weak var brandDisplayLabel: UILabel!
     @IBOutlet weak var flavorDisplayLabel: UILabel!
@@ -90,6 +90,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         super.viewDidLoad()
         cakeListTableView.delegate = self
         cakeListTableView.dataSource = self
+        setupGestureImageView()
         
     }
     
@@ -120,16 +121,42 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     
     //MARK: -- 아직 적용 안됨 : 카테고리 view corner radius
     func categoriesCornerSoftly() {
-        self.BrandDropDownView.layer.cornerRadius = 20
+        self.brandDropDownView.layer.cornerRadius = 20
         self.brandDropDownButton.layer.masksToBounds = true
         self.flavorDropDownView.layer.cornerRadius = 20
         self.flavorDropDownView.layer.masksToBounds = true
     }
     
     
-    @IBAction func clickDropDownAction(_ sender: UIButton) {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    private func setupGestureImageView() {
         
+        // UITapGestureRecognizer를 생성하고, 액션 메서드 설정
+        // A gesture recognizer has one or more target-action pairs associated with it. If there are multiple target-action pairs, they’re discrete, and not cumulative -- 공식문서
+        // UITapGestureRecognizer 인스턴스는 한 번에 하나의 뷰만 인식하도록 설계
+        //MARK: (수정사항: 함수로 만들어보기)
         
+        //target.self 현재의 viewController를 가르킴
+        let tapGestureBrandDropDownView = UITapGestureRecognizer(target: self, action: #selector(clickDropDownAction))
+        let tapGestureFlavorDropDownView = UITapGestureRecognizer(target: self, action: #selector(clickDropDownAction))
+
+        // 이미지 뷰에 제스처 인식기 추가
+        // 제스쳐 인식기가 인식되면 나머지 터치를 뷰에서 취소함 고로 false 처리해줌
+        tapGestureBrandDropDownView.cancelsTouchesInView = false
+        brandDropDownView.addGestureRecognizer(tapGestureBrandDropDownView)
+        brandDropDownView.isUserInteractionEnabled = true
+        
+        tapGestureFlavorDropDownView.cancelsTouchesInView = false
+        flavorDropDownView.addGestureRecognizer(tapGestureFlavorDropDownView)
+        flavorDropDownView.isUserInteractionEnabled = true
+    }
+    
+    @objc private func clickDropDownAction(_ sender: UITapGestureRecognizer? = nil) {
+        
+      
         let dropDownView = DropDown() // DropDown 인스턴스 생성
         
         
@@ -137,11 +164,17 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         dropDownView.backgroundColor = .systemOrange
         // MARK: - (수정필요) 칸별 구분선의 x좌표가 bottomOffset을 따라가지 못함
         dropDownView.separatorColor = .black // 각 칸별 구분선 색상
+        dropDownView.selectionBackgroundColor = .systemRed
+        dropDownView.dismissMode = .automatic
+        
         dropDownView.textFont = .systemFont(ofSize: 12)// 칸별 폰트
         dropDownView.direction = .bottom // 드랍 다운 방향
         dropDownView.layer.cornerRadius = 20 // 드롭다운의 모서리를 둥글게 설정
-        dropDownView.layer.masksToBounds = true;
-        filterDropDownButton(sender, dropDownView)
+        dropDownView.layer.masksToBounds = true
+        
+        if let tappedView = sender?.view { //tap제스쳐가 가지고 있는 view에 대해서 옵셔널 처리
+            filterDropDownButton(tappedView, dropDownView)
+        }
         
         dropDownView.animationduration = 0.2 //드롭 다운 애니메이션 시간
         dropDownView.show()
@@ -150,30 +183,31 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     }
     
     //MARK: clickDropDownAction의 filtering이벤트
-    fileprivate func filterDropDownButton(_ sender: UIButton, _ dropDownView: DropDown) {
+    fileprivate func filterDropDownButton(_ sender: UIView, _ dropDownView: DropDown) {
         
         //MARK: (수정사항: switch로 풀어보기)brandDropDown 이벤트 클릭해서 호출시
         switch sender {
-        case brandDropDownButton:
+        case brandDropDownView:
             dropDownView.dataSource = self.dropDownBrandMenu // 어떤 데이터를 보여줄건지
             // 어느 뷰 위치에 넣을것인지
             
-            dropDownView.anchorView = self.brandDisplayLabel
+            dropDownView.anchorView = self.brandDropDownView
             // 어느 뷰 위치에 넣을것인지
-            dropDownView.bottomOffset = CGPoint(x: -10, y:(dropDownView.anchorView?.plainView.bounds.height)!)// 지정뷰의 어느위치에 넣을것인지
+            dropDownView.bottomOffset = CGPoint(x: 0, y: (dropDownView.anchorView?.plainView.bounds.height)!)// 지정뷰의 어느위치에 넣을것인지                            dropDownView.bounds.height   (dropDownView.anchorView?.plainView.bounds.height)!
             // 이걸 설정안하면 뷰를 가리면서 메뉴가 나오게됩니다!
             dropDownView.selectionAction = { [unowned self] (index: Int, item: String) in
                 // 선택한 아이템에 따라 필터링 실행
                 self.brandDisplayLabel.text = item
                 
                 
+                
                 classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
             }
         
-        case flavorDropDownButton :
+        case flavorDropDownView :
             dropDownView.dataSource = self.dropDownFlavorMenu // 어떤 데이터를 보여줄건지
             
-            dropDownView.anchorView = self.flavorDisplayLabel
+            dropDownView.anchorView = self.flavorDropDownView
             // 어느 뷰 위치에 넣을것인지
             dropDownView.bottomOffset = CGPoint(x: 0, y:(dropDownView.anchorView?.plainView.bounds.height)!)// 지정뷰의 어느위치에 넣을것인지
             // 이걸 설정안하면 뷰를 가리면서 메뉴가 나오게됩니다!

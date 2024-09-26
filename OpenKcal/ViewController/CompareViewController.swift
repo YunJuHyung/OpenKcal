@@ -12,6 +12,9 @@ class printSetCakeDataCell: CompareViewController {
     //아마 재사용 가능하게만들어서 오른쪽에도 사용하게 하는 것을 의도함
     // extenstion이 나은지 아니면 그냥 프로토콜이 나은지?
     
+    //    func printWhichCakeIsLowerCalories(cake: CakeData) -> String{
+    //
+    //    }
     func printTitleSetCakeDataCell(cake: CakeData) -> String {
         return
                 """
@@ -22,47 +25,88 @@ class printSetCakeDataCell: CompareViewController {
                 포화지방: \(cake.saturatedFat)
                 단백질: \(cake.protein)
                 """
-     
+        
     }
 }
+
 class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRecognizerDelegate {
     
-    var selectedCake: CakeData? // 선택된 케이크를 저장할 프로퍼티
+    var leftSelectedCake: CakeData? // 선택된 케이크를 왼쪽 테이블 셀에 저장할 프로퍼티
+    //didSet으로 프로퍼티 값이 변경된 직후에 호출해서 조건부 확인
+    {
+        didSet {
+            //didset 과정에서 이미 data는 상관없음
+            if leftSelectedCake == nil {
+                
+            }
+            else {
+                //결국 코드로 하는거 패배하고 gui로
+                self.leftCakeSubView.isHidden = true
+                
+                self.cakeImageView1.image = UIImage(named: leftSelectedCake?.name ?? "")
+            }
+        }
+    }
     
+    var rightSelectedCake: CakeData? // 선택된 케이크를 오른쪽 테이블 셀에 저장할 프로퍼티
+    
+    {
+        didSet {
+            if rightSelectedCake == nil {
+            }
+            else {
+                self.rightCakeSubView.isHidden = true
+                self.cakeImageView2.image = UIImage(named: rightSelectedCake?.name ?? "")
+            }
+        }
+    }
+    var plusImageView: UIImageView?
+    
+    @IBOutlet weak var leftCakeSubView: UIImageView!
+    @IBOutlet weak var rightCakeSubView: UIImageView!
     @IBOutlet weak var cakeImageView1: UIImageView!
     @IBOutlet weak var cakeImageView2: UIImageView!
     @IBOutlet weak var firstCakeImageBackgroundView: UIView!
     @IBOutlet weak var secondCakeImageBackgroundView: UIView!
-    @IBOutlet weak var cakeTableView1: UITableView!
+
+    @IBOutlet weak var viewEmbededTV: UIView!
     
     @IBOutlet weak var leftTableView: UITableView!
     
     @IBOutlet weak var rightTableView: UITableView!
     
+    @IBOutlet weak var showLessCaloriesLabel: UILabel!
+    
+    @IBOutlet weak var TVResetButton: UIButton!
     
     func navigateToSelectCakeViewController(uiImageView: UIImageView) {
         if let selectCakeVC = storyboard?.instantiateViewController(withIdentifier: "SelectCakeViewController") as? SelectCakeViewController {
+            print(#fileID, #function, #line, "케이크 선택 진입@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
             
             switch uiImageView {
             case cakeImageView1:
                 print(#fileID, #function, #line, "right TableView Set")
                 selectCakeVC.cakeDataCloserType = { [weak self] selectedCake in
                     // 선택된 케이크 데이터를 저장
-                    self?.selectedCake = selectedCake
+                    self?.leftSelectedCake = selectedCake
+                    //선택된 케이크 이름과 일치하는 사진을 Assets에서 불러옴
+                    
+                    // 바꾼 addPlusImage
+                    
                     self?.leftTableView.reloadData()
-                    // 필요한 로직 수행 (ex. 테이블 업데이트)
-                    print("선택된 케이크: \(selectedCake.name)")
-            }
+                }
             case cakeImageView2:
                 print(#fileID, #function, #line, "left TableView Set")
                 selectCakeVC.cakeDataCloserType = { [weak self] selectedCake in
                     // 선택된 케이크 데이터를 저장
-                    self?.selectedCake = selectedCake
-                    self?.rightTableView.reloadData()
+                    self?.rightSelectedCake = selectedCake
                     // 필요한 로직 수행 (ex. 테이블 업데이트)
-                    print("선택된 케이크: \(selectedCake.name)")
-            }
-            
+                    self?.cakeImageView2.image =
+                    UIImage(named: selectedCake.name)
+                    
+                    self?.rightTableView.reloadData()
+                }
+                
             default:
                 print(#fileID, #function, #line, "find line")
             }
@@ -75,88 +119,94 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         
         //어차피 단일 데이터만 보여줘서 1로 해도됨
         //미리 선택되는 cell이 안생기게 합니다
-        return selectedCake != nil ? 1 : 0
-        
-        
-        //        return userPickCakeSelectVCValue.count
+        if tableView == leftTableView {
+            return leftSelectedCake != nil ? 1 : 0
+        }
+        else if tableView == rightTableView {
+            return rightSelectedCake != nil ? 1 : 0
+        } else {
+            print(#fileID, #function, #line, "numberOfRowsInSection Error")
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "resuableCell", for: indexPath)
         print(#fileID, #function, #line, "checkFuncTableViewCellForRowAt")
-        if let cake = self.selectedCake {
+        
+        
+        if tableView == leftTableView, let cake = self.leftSelectedCake {
             let printingListCell = printSetCakeDataCell()
             print("cake 에 대한 정보: \(cake)")
             cell.textLabel?.numberOfLines = 0
             cell.textLabel?.text = printingListCell.printTitleSetCakeDataCell(cake: cake)
+            
         }
-        
+        if tableView == rightTableView, let cake = self.rightSelectedCake {
+            let printingListCell = printSetCakeDataCell()
+            print("cake 에 대한 정보: \(cake)")
+            cell.textLabel?.numberOfLines = 0
+            cell.textLabel?.text = printingListCell.printTitleSetCakeDataCell(cake: cake)
+            
+        }
+        makeLabelMessageCompareCaroies()
         return cell
     }
     
-    
+    //선택된 케이크 칼로리 비교 텍스트 만드는 메서드
+    func makeLabelMessageCompareCaroies() {
+        //케이꾸가 없음
+        print(#fileID, #function, #line, "진입한지 확인 ***********************")
+        print("leftSelectedCake: \(String(describing: leftSelectedCake)), rightSelectedCake: \(String(describing: rightSelectedCake))")
+        
+        guard let leftCake = leftSelectedCake, let rightCake = rightSelectedCake else {
+            showLessCaloriesLabel.text = "이미지 칸을 눌러 비교할 케이크를 선택해주세요!"
+            return
+        }
+        let leftCakeKcalInteger = Int(leftCake.kcal)
+        let rightCakeKcalInteger = Int(rightCake.kcal)
+        if let leftCakeKcalInteger = leftCakeKcalInteger,
+           let rightCakeKcalInteger = rightCakeKcalInteger {
+            print(#fileID, #function, #line, "진입한지 확인 %%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+            
+            if leftCakeKcalInteger < rightCakeKcalInteger {
+                let lowerKcal = rightCakeKcalInteger - leftCakeKcalInteger
+                showLessCaloriesLabel.text = "\(leftCake.name)의 칼로리가 \(lowerKcal)만큼 더 낮네요!🍰"
+            } else if rightCakeKcalInteger < leftCakeKcalInteger {
+                let lowerKcal = leftCakeKcalInteger - rightCakeKcalInteger
+                showLessCaloriesLabel.text = "\(rightCake.name)의 칼로리가 \(lowerKcal)만큼 더 낮네요!🍰"
+            } else {
+                showLessCaloriesLabel.text = "두 케이크의 칼로리가 같네요!🍰"
+            }
+        }
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        makeCakeUIViewBackgroundEffect(selectUIView: firstCakeImageBackgroundView)
-        makeCakeUIViewBackgroundEffect(selectUIView: secondCakeImageBackgroundView)
-        addPlusImage(firstCakeImageBackgroundView)
-        addPlusImage(secondCakeImageBackgroundView)
-        setupImageView()
+        firstCakeImageBackgroundView.makeBackgroundEffect()
+        secondCakeImageBackgroundView.makeBackgroundEffect()
+        viewEmbededTV.makeBackgroundEffect()
+        setupGestureImageView()
         leftTableView.dataSource = self
         rightTableView.dataSource = self
-        
-    }
-    
-    //코드 재사용이 이건가요? 원래도 받는 파라미터는 UIView였습니다만...
-    func makeCakeUIViewBackgroundEffect(selectUIView: UIView) {
-        selectUIView.layer.cornerRadius = 10
-        selectUIView.layer.shadowColor = UIColor.black.cgColor
-        selectUIView.layer.shadowOpacity = 0.5
-        selectUIView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        selectUIView.layer.shadowRadius = 4
-        selectUIView.layer.masksToBounds = false
     }
     
     
     
-    func addPlusImage(_ uiView: UIView?) {
-        guard let uiView = uiView else { return }
+    @IBAction func makeTVClear(_ sender: UIButton) {
         
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "plus")
-        imageView.tintColor = UIColor.black
         
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        
-        uiView.addSubview(imageView)
-        
-        // 오토레이아웃으로 UIImageView를 중앙에 배치
-        NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: uiView.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: uiView.centerYAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 50), // 이미지 크기 조정
-            imageView.heightAnchor.constraint(equalToConstant: 50)
-        ])
     }
-    
     //제스쳐 인터렉션을 동시에 가능하게 하는 함수
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    /*
-     Return Value
-     true to allow both gestureRecognizer and otherGestureRecognizer to recognize their gestures simultaneously. The default implementation returns false—no two gestures can be recognized simultaneously.
-     */
-//    tapGesture1.delegate = self
-//    tapGesture2.delegate = self
 
-    private func setupImageView() {
+    
+    private func setupGestureImageView() {
         
         // UITapGestureRecognizer를 생성하고, 액션 메서드 설정
         // A gesture recognizer has one or more target-action pairs associated with it. If there are multiple target-action pairs, they’re discrete, and not cumulative -- 공식문서
@@ -166,7 +216,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         //target.self 현재의 viewController를 가르킴
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped1))
         let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped2))
-
+        
         // 이미지 뷰에 제스처 인식기 추가
         cakeImageView1.addGestureRecognizer(tapGesture1)
         cakeImageView1.isUserInteractionEnabled = true
@@ -182,7 +232,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         //네비로 연결 하기
         navigateToSelectCakeViewController(uiImageView: cakeImageView1)
     }
-
+    
     @objc private func imageViewTapped2() {
         // 터치 이벤트 처리
         
@@ -192,4 +242,16 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     }
     
     
+}
+
+//배경 둥글게 + 그림자
+extension UIView {
+    func makeBackgroundEffect() {
+        self.layer.cornerRadius = 10
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowRadius = 4
+        self.layer.masksToBounds = false
+    }
 }
