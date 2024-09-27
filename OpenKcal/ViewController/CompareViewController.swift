@@ -197,6 +197,14 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     
     
     @IBAction func makeTVClear(_ sender: UIButton) {
+        cakeImageView1.image = nil
+        cakeImageView2.image = nil
+        leftCakeSubView.isHidden = false
+        rightCakeSubView.isHidden = false
+        self.leftSelectedCake = nil
+        self.rightSelectedCake = nil
+        self.leftTableView.reloadData()
+        self.rightTableView.reloadData()
         
         
     }
@@ -207,7 +215,6 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
 
     
     private func setupGestureImageView() {
-        
         // UITapGestureRecognizer를 생성하고, 액션 메서드 설정
         // A gesture recognizer has one or more target-action pairs associated with it. If there are multiple target-action pairs, they’re discrete, and not cumulative -- 공식문서
         // UITapGestureRecognizer 인스턴스는 한 번에 하나의 뷰만 인식하도록 설계
