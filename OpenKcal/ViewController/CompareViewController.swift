@@ -8,13 +8,7 @@
 import UIKit
 
 //케이크를 비교해서 어떤 케이크의 칼로리가 더 낮은지 볼 수 있는 화면입니다.
-class printSetCakeDataCell: CompareViewController {
-    //아마 재사용 가능하게만들어서 오른쪽에도 사용하게 하는 것을 의도함
-    // extenstion이 나은지 아니면 그냥 프로토콜이 나은지?
-    
-    //    func printWhichCakeIsLowerCalories(cake: CakeData) -> String{
-    //
-    //    }
+class PrintSetCakeDataCell: CompareViewController {
     func printTitleSetCakeDataCell(cake: CakeData) -> String {
         return
                 """
@@ -137,14 +131,14 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         
         
         if tableView == leftTableView, let cake = self.leftSelectedCake {
-            let printingListCell = printSetCakeDataCell()
+            let printingListCell = PrintSetCakeDataCell()
             print("cake 에 대한 정보: \(cake)")
             cell.textLabel?.numberOfLines = 0
             cell.textLabel?.text = printingListCell.printTitleSetCakeDataCell(cake: cake)
             
         }
         if tableView == rightTableView, let cake = self.rightSelectedCake {
-            let printingListCell = printSetCakeDataCell()
+            let printingListCell = PrintSetCakeDataCell()
             print("cake 에 대한 정보: \(cake)")
             cell.textLabel?.numberOfLines = 0
             cell.textLabel?.text = printingListCell.printTitleSetCakeDataCell(cake: cake)
@@ -201,6 +195,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         cakeImageView2.image = nil
         leftCakeSubView.isHidden = false
         rightCakeSubView.isHidden = false
+        showLessCaloriesLabel.text = "이미지 칸을 눌러 비교할 케이크를 선택해주세요!"
         self.leftSelectedCake = nil
         self.rightSelectedCake = nil
         self.leftTableView.reloadData()

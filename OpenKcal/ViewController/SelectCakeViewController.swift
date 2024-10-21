@@ -53,7 +53,6 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
             cakeDataCloserType(selectedCake)
         }
         // 선택된 케이크 데이터를 sender로 전달하여 세그웨이 수행
-        print("sender: selectedCake")
         navigationController?.popViewController(animated: true)
     }
     
@@ -185,7 +184,6 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     //MARK: clickDropDownAction의 filtering이벤트
     fileprivate func filterDropDownButton(_ sender: UIView, _ dropDownView: DropDown) {
         
-        //MARK: (수정사항: switch로 풀어보기)brandDropDown 이벤트 클릭해서 호출시
         switch sender {
         case brandDropDownView:
             dropDownView.dataSource = self.dropDownBrandMenu // 어떤 데이터를 보여줄건지
@@ -198,8 +196,6 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
             dropDownView.selectionAction = { [unowned self] (index: Int, item: String) in
                 // 선택한 아이템에 따라 필터링 실행
                 self.brandDisplayLabel.text = item
-                
-                
                 
                 classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
             }
@@ -256,7 +252,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
             filteredData = filteredData.filter("brand == %@", String(selectedBrand ?? ""))
         }
         self.filteredCakes = Array(filteredData)
-        print(" 데이터 체크용 프린트 \(filteredCakes)")
+        print(#fileID, #function, #line, "데이터 체크용 프린트 \(filteredCakes)")
         self.cakeListTableView.reloadData()
     }
 }

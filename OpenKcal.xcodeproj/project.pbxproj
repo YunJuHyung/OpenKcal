@@ -10,19 +10,19 @@
 		7BDBBB50E4A44D80051FF625 /* Pods_OpenKcal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89F9950F35BD7FF9688FD1B /* Pods_OpenKcal.framework */; };
 		B09B3D033DF9BD9DA9FEB1D3 /* Pods_OpenKcal_OpenKcalUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CE58CA2629E3261A3A3744 /* Pods_OpenKcal_OpenKcalUITests.framework */; };
 		EF047BFD544A42A08776A739 /* Pods_OpenKcalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFBE3F4830749EC1FB1621E /* Pods_OpenKcalTests.framework */; };
+		F43FB0842C9D63A100B36E66 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F43FB0832C9D63A100B36E66 /* RealmSwift */; };
 		F46E0A652C89849D006F59D4 /* CompareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E0A642C89849D006F59D4 /* CompareViewController.swift */; };
-		F46E0A682C89968D006F59D4 /* SelecteCakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E0A672C89968D006F59D4 /* SelecteCakeViewController.swift */; };
+		F46E0A682C89968D006F59D4 /* SelectCakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E0A672C89968D006F59D4 /* SelectCakeViewController.swift */; };
 		F46E0A6B2C899862006F59D4 /* CakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E0A6A2C899862006F59D4 /* CakeData.swift */; };
 		F4858E4D2C8710C400A5B878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E4C2C8710C400A5B878 /* AppDelegate.swift */; };
 		F4858E4F2C8710C400A5B878 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E4E2C8710C400A5B878 /* SceneDelegate.swift */; };
-		F4858E512C8710C400A5B878 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E502C8710C400A5B878 /* ViewController.swift */; };
+		F4858E512C8710C400A5B878 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E502C8710C400A5B878 /* MainViewController.swift */; };
 		F4858E542C8710C400A5B878 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = F4858E532C8710C400A5B878 /* Base */; };
 		F4858E562C8710C600A5B878 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4858E552C8710C600A5B878 /* Assets.xcassets */; };
 		F4858E592C8710C600A5B878 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = F4858E582C8710C600A5B878 /* Base */; };
 		F4858E642C8710C600A5B878 /* OpenKcalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E632C8710C600A5B878 /* OpenKcalTests.swift */; };
 		F4858E6E2C8710C600A5B878 /* OpenKcalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E6D2C8710C600A5B878 /* OpenKcalUITests.swift */; };
 		F4858E702C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E6F2C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift */; };
-		F4858E7E2C87127400A5B878 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F4858E7D2C87127400A5B878 /* RealmSwift */; };
 		F4893A5B2C95745E00FFB1FF /* CreateCakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4893A5A2C95745E00FFB1FF /* CreateCakeViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,12 +53,12 @@
 		E6A2FA5B4FADB585520E47E8 /* Pods-OpenKcal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcal.debug.xcconfig"; path = "Target Support Files/Pods-OpenKcal/Pods-OpenKcal.debug.xcconfig"; sourceTree = "<group>"; };
 		EA0F62FC06172C2AE1ABEE30 /* Pods-OpenKcalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcalTests.debug.xcconfig"; path = "Target Support Files/Pods-OpenKcalTests/Pods-OpenKcalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F46E0A642C89849D006F59D4 /* CompareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareViewController.swift; sourceTree = "<group>"; };
-		F46E0A672C89968D006F59D4 /* SelecteCakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecteCakeViewController.swift; sourceTree = "<group>"; };
+		F46E0A672C89968D006F59D4 /* SelectCakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCakeViewController.swift; sourceTree = "<group>"; };
 		F46E0A6A2C899862006F59D4 /* CakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CakeData.swift; sourceTree = "<group>"; };
 		F4858E492C8710C400A5B878 /* OpenKcal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenKcal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4858E4C2C8710C400A5B878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4858E4E2C8710C400A5B878 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F4858E502C8710C400A5B878 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F4858E502C8710C400A5B878 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F4858E532C8710C400A5B878 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F4858E552C8710C600A5B878 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4858E582C8710C600A5B878 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,7 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4858E7E2C87127400A5B878 /* RealmSwift in Frameworks */,
+				F43FB0842C9D63A100B36E66 /* RealmSwift in Frameworks */,
 				7BDBBB50E4A44D80051FF625 /* Pods_OpenKcal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,9 +127,9 @@
 		F46E0A662C8984A6006F59D4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				F4858E502C8710C400A5B878 /* ViewController.swift */,
+				F4858E502C8710C400A5B878 /* MainViewController.swift */,
 				F46E0A642C89849D006F59D4 /* CompareViewController.swift */,
-				F46E0A672C89968D006F59D4 /* SelecteCakeViewController.swift */,
+				F46E0A672C89968D006F59D4 /* SelectCakeViewController.swift */,
 				F4893A5A2C95745E00FFB1FF /* CreateCakeViewController.swift */,
 			);
 			path = ViewController;
@@ -216,7 +216,7 @@
 			);
 			name = OpenKcal;
 			packageProductDependencies = (
-				F4858E7D2C87127400A5B878 /* RealmSwift */,
+				F43FB0832C9D63A100B36E66 /* RealmSwift */,
 			);
 			productName = OpenKcal;
 			productReference = F4858E492C8710C400A5B878 /* OpenKcal.app */;
@@ -269,7 +269,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					F4858E482C8710C400A5B878 = {
 						CreatedOnToolsVersion = 15.4;
@@ -294,7 +294,7 @@
 			);
 			mainGroup = F4858E402C8710C400A5B878;
 			packageReferences = (
-				F4858E7C2C87127400A5B878 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				F43FB0822C9D63A100B36E66 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = F4858E4A2C8710C400A5B878 /* Products */;
 			projectDirPath = "";
@@ -445,10 +445,10 @@
 				F46E0A652C89849D006F59D4 /* CompareViewController.swift in Sources */,
 				F46E0A6B2C899862006F59D4 /* CakeData.swift in Sources */,
 				F4893A5B2C95745E00FFB1FF /* CreateCakeViewController.swift in Sources */,
-				F4858E512C8710C400A5B878 /* ViewController.swift in Sources */,
+				F4858E512C8710C400A5B878 /* MainViewController.swift in Sources */,
 				F4858E4D2C8710C400A5B878 /* AppDelegate.swift in Sources */,
 				F4858E4F2C8710C400A5B878 /* SceneDelegate.swift in Sources */,
-				F46E0A682C89968D006F59D4 /* SelecteCakeViewController.swift in Sources */,
+				F46E0A682C89968D006F59D4 /* SelectCakeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +509,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -572,6 +573,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -685,7 +687,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA0F62FC06172C2AE1ABEE30 /* Pods-OpenKcalTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -706,7 +707,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DC550E3CBF62A1498DB8CA06 /* Pods-OpenKcalTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -727,7 +727,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 122CE5ECD96B5171D6EBE2BC /* Pods-OpenKcal-OpenKcalUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5Z933926NX;
@@ -746,7 +745,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F865D78033493385D53FC450 /* Pods-OpenKcal-OpenKcalUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5Z933926NX;
@@ -803,7 +801,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F4858E7C2C87127400A5B878 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		F43FB0822C9D63A100B36E66 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -814,9 +812,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F4858E7D2C87127400A5B878 /* RealmSwift */ = {
+		F43FB0832C9D63A100B36E66 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F4858E7C2C87127400A5B878 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = F43FB0822C9D63A100B36E66 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */

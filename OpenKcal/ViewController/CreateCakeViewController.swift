@@ -74,7 +74,7 @@ class CreateCakeViewController: UIViewController {
         print(#fileID, #function, #line, "func createCakeData 실행확인용")
         createCakeData(nameData: cakeName, brandData: brand, flavorData: flavor, kcalData: kcal, saturatedFatData: saturatedFat, sugarData: sugar, proteinData: protein)
         
-        let alert = UIAlertController(title: "알림", message: "케이크 머시기 추가됨 \(cakeName)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "알림", message: "케이크 \(cakeName)가 추가되었습니다.", preferredStyle: .alert)
         let close = UIAlertAction(title: "닫기", style: .default, handler: nil)
         
         alert.addAction(close)
@@ -89,7 +89,7 @@ class CreateCakeViewController: UIViewController {
             // Delete all objects from the realm.
             realm.deleteAll()
             
-            let alert = UIAlertController(title: "알림", message: "케이크 전체 삭제됨", preferredStyle: .alert)
+            let alert = UIAlertController(title: "알림", message: "전체 케이크 데이터가 삭제되었습니다.", preferredStyle: .alert)
             let close = UIAlertAction(title: "닫기", style: .default, handler: nil)
             
             alert.addAction(close)
