@@ -24,6 +24,12 @@
 		F4858E6E2C8710C600A5B878 /* OpenKcalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E6D2C8710C600A5B878 /* OpenKcalUITests.swift */; };
 		F4858E702C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E6F2C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift */; };
 		F4893A5B2C95745E00FFB1FF /* CreateCakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4893A5A2C95745E00FFB1FF /* CreateCakeViewController.swift */; };
+		F4A335092CCF6DB0002069C2 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4A335082CCF6DB0002069C2 /* FirebaseAnalytics */; };
+		F4A3350B2CCF6DB0002069C2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F4A3350A2CCF6DB0002069C2 /* FirebaseAuth */; };
+		F4A3350D2CCF6DB0002069C2 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F4A3350C2CCF6DB0002069C2 /* FirebaseCore */; };
+		F4A3350F2CCF6DB0002069C2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = F4A3350E2CCF6DB0002069C2 /* FirebaseDatabase */; };
+		F4A335112CCF6DB0002069C2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F4A335102CCF6DB0002069C2 /* FirebaseFirestore */; };
+		F4A335132CCF8523002069C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4A335122CCF8523002069C2 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +75,7 @@
 		F4858E6D2C8710C600A5B878 /* OpenKcalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenKcalUITests.swift; sourceTree = "<group>"; };
 		F4858E6F2C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenKcalUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F4893A5A2C95745E00FFB1FF /* CreateCakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCakeViewController.swift; sourceTree = "<group>"; };
+		F4A335122CCF8523002069C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F865D78033493385D53FC450 /* Pods-OpenKcal-OpenKcalUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenKcal-OpenKcalUITests.release.xcconfig"; path = "Target Support Files/Pods-OpenKcal-OpenKcalUITests/Pods-OpenKcal-OpenKcalUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,8 +84,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4A3350F2CCF6DB0002069C2 /* FirebaseDatabase in Frameworks */,
 				F43FB0842C9D63A100B36E66 /* RealmSwift in Frameworks */,
+				F4A3350D2CCF6DB0002069C2 /* FirebaseCore in Frameworks */,
 				7BDBBB50E4A44D80051FF625 /* Pods_OpenKcal.framework in Frameworks */,
+				F4A335092CCF6DB0002069C2 /* FirebaseAnalytics in Frameworks */,
+				F4A3350B2CCF6DB0002069C2 /* FirebaseAuth in Frameworks */,
+				F4A335112CCF6DB0002069C2 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +188,7 @@
 				F4858E552C8710C600A5B878 /* Assets.xcassets */,
 				F4858E572C8710C600A5B878 /* LaunchScreen.storyboard */,
 				F4858E5A2C8710C600A5B878 /* Info.plist */,
+				F4A335122CCF8523002069C2 /* GoogleService-Info.plist */,
 			);
 			path = OpenKcal;
 			sourceTree = "<group>";
@@ -217,6 +230,11 @@
 			name = OpenKcal;
 			packageProductDependencies = (
 				F43FB0832C9D63A100B36E66 /* RealmSwift */,
+				F4A335082CCF6DB0002069C2 /* FirebaseAnalytics */,
+				F4A3350A2CCF6DB0002069C2 /* FirebaseAuth */,
+				F4A3350C2CCF6DB0002069C2 /* FirebaseCore */,
+				F4A3350E2CCF6DB0002069C2 /* FirebaseDatabase */,
+				F4A335102CCF6DB0002069C2 /* FirebaseFirestore */,
 			);
 			productName = OpenKcal;
 			productReference = F4858E492C8710C400A5B878 /* OpenKcal.app */;
@@ -295,6 +313,7 @@
 			mainGroup = F4858E402C8710C400A5B878;
 			packageReferences = (
 				F43FB0822C9D63A100B36E66 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = F4858E4A2C8710C400A5B878 /* Products */;
 			projectDirPath = "";
@@ -313,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4858E562C8710C600A5B878 /* Assets.xcassets in Resources */,
+				F4A335132CCF8523002069C2 /* GoogleService-Info.plist in Resources */,
 				F4858E592C8710C600A5B878 /* Base in Resources */,
 				F4858E542C8710C400A5B878 /* Base in Resources */,
 			);
@@ -809,6 +829,14 @@
 				kind = branch;
 			};
 		};
+		F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -816,6 +844,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F43FB0822C9D63A100B36E66 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		F4A335082CCF6DB0002069C2 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		F4A3350A2CCF6DB0002069C2 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		F4A3350C2CCF6DB0002069C2 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		F4A3350E2CCF6DB0002069C2 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		F4A335102CCF6DB0002069C2 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

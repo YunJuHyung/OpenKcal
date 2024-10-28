@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 //케이크를 비교해서 어떤 케이크의 칼로리가 더 낮은지 볼 수 있는 화면입니다.
 class PrintSetCakeDataCell: CompareViewController {
@@ -24,6 +25,10 @@ class PrintSetCakeDataCell: CompareViewController {
 }
 
 class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRecognizerDelegate {
+    
+    var ref: DatabaseReference?
+
+    
     
     var leftSelectedCake: CakeData? // 선택된 케이크를 왼쪽 테이블 셀에 저장할 프로퍼티
     //didSet으로 프로퍼티 값이 변경된 직후에 호출해서 조건부 확인
@@ -179,6 +184,9 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //파이어베이스 db가져오기
+        ref = Database.database().reference()
         
         firstCakeImageBackgroundView.makeBackgroundEffect()
         secondCakeImageBackgroundView.makeBackgroundEffect()
