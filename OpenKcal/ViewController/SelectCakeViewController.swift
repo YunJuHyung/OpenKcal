@@ -9,13 +9,29 @@ import DropDown
 import UIKit
 import RealmSwift
 import SwiftUI
+import FirebaseDatabase
+import FirebaseFirestore
 
+struct cakeDataEntity {
+    var name: String = ""
+    var brand: String = ""
+    var flavor: String = ""
+    var kcal: String = ""
+    var saturatedFat: String = ""
+    var sugar: String = ""
+    var protein: String = ""
+}
 //케이크의 카테고리를 필터링해서 선택하는 화면입니다.
 class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
-    var filteredCakes: [CakeData] = [] // 필터링된 케이크 데이터를 저장할 배열
+    
+    var filteredCakes: [cakeDataEntity] = [] // 필터링된 케이크 데이터를 저장할 배열
     let cakeData = CakeData()
     let imageView = UIImageView()
+    
+    // let refHandle = self.ref?.child("cakeData")
+    
+    
     
     // dropdown에 들어가는 text
     let dropDownBrandMenu = [
@@ -40,14 +56,16 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     
     @IBOutlet weak var brandDropDownButton: UIButton!
     @IBOutlet weak var flavorDropDownButton: UIButton!
-    var cakeDataCloserType: ((CakeData) -> Void)?
+    var cakeDataCloserType: ((cakeDataEntity) -> Void)?
+    
+    //closer사용할때 선택한 아이템을 넘겨줄때만 struct사용하고 아닐때는
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredCakes.count
+        return self.filteredCakes.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCake = filteredCakes[indexPath.row]
+        let selectedCake = self.filteredCakes[indexPath.row]
         
         if let cakeDataCloserType = cakeDataCloserType{
             cakeDataCloserType(selectedCake)
@@ -63,6 +81,8 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         
         // 필터링된 케이크 데이터를 셀에 표시
         let cake = filteredCakes[indexPath.row]
+        print(#fileID, #function, #line, "테이블뷰 케이크 cake 확인합니다 \(cake)")
+        print(#fileID, #function, #line, "테이블뷰 케이크 filteredCakes 확인합니다 \(filteredCakes)")
         
         cell.textLabel?.text = cake.name
         //MARK: (수정필요) 아래 내용은 안나오긴함 detail칸 안만들었음
@@ -85,10 +105,14 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     //        }
     //    }
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         cakeListTableView.delegate = self
         cakeListTableView.dataSource = self
+        classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
         setupGestureImageView()
         
     }
@@ -141,7 +165,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         //target.self 현재의 viewController를 가르킴
         let tapGestureBrandDropDownView = UITapGestureRecognizer(target: self, action: #selector(clickDropDownAction))
         let tapGestureFlavorDropDownView = UITapGestureRecognizer(target: self, action: #selector(clickDropDownAction))
-
+        
         // 이미지 뷰에 제스처 인식기 추가
         // 제스쳐 인식기가 인식되면 나머지 터치를 뷰에서 취소함 고로 false 처리해줌
         tapGestureBrandDropDownView.cancelsTouchesInView = false
@@ -155,7 +179,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     
     @objc private func clickDropDownAction(_ sender: UITapGestureRecognizer? = nil) {
         
-      
+        
         let dropDownView = DropDown() // DropDown 인스턴스 생성
         
         
@@ -197,9 +221,15 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                 // 선택한 아이템에 따라 필터링 실행
                 self.brandDisplayLabel.text = item
                 
-                classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
+                
+                //fireBase사용
+                classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
+                
+                print(#fileID, #function, #line, "self.")
+                //localDB용
+                //classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
             }
-        
+            
         case flavorDropDownView :
             dropDownView.dataSource = self.dropDownFlavorMenu // 어떤 데이터를 보여줄건지
             
@@ -211,48 +241,192 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                 // 선택한 아이템에 따라 필터링 실행
                 self.flavorDisplayLabel.text = item
                 
-                classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
-
+                //                classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
+                
             }
-
+            
         default:
             print("default messages")
         }
         
     }
-
+    
     //MARK: -- after filterDropDownButton set filtering tableCellData 메소드
     func classifyByCategoires(selectedBrand: String?, selectedFlavor: String?) {
-        print("들어오는지 확인")
+        //
+        //        let realm = try! Realm()
+        //        var filteredData = realm.objects(CakeData.self)
+        //        let exceptionHandlingBrandString: String = "브랜드 선택"
+        //        let exceptionHandlingFlavorString: String = "케이크 맛 선택"
+        //
+        //        //가독성을 위해 옵셔널 바인딩을 사용
+        //        if let selectedBrand = selectedBrand, selectedBrand != exceptionHandlingBrandString  {
+        //            filteredData = filteredData.filter("brand == %@", selectedBrand)
+        //        }
+        //
+        //        if let selectedFlavor = selectedFlavor, selectedFlavor != exceptionHandlingFlavorString {
+        //            filteredData = filteredData.filter("flavor == %@", selectedFlavor)
+        //        }
+        //
+        //        if let selectedBrand = selectedBrand,selectedBrand != exceptionHandlingBrandString,
+        //           let selectedFlavor = selectedFlavor, selectedFlavor != exceptionHandlingFlavorString {
+        //            filteredData = filteredData.filter("brand == %@ AND flavor == %@", selectedBrand, selectedFlavor)
+        //        }
+        //
+        //        if selectedBrand == exceptionHandlingBrandString &&
+        //            selectedFlavor == exceptionHandlingFlavorString {
+        //
+        //            print("테이블 빈처리")
+        //            // 존재하지 않는 조건을 필터링하여 빈 Results를 생성 항상 false를 만들어냄 -> 값이 안나옴
+        //            filteredData = filteredData.filter("brand == %@", String(selectedBrand ?? ""))
+        //        }
+        //        self.filteredCakes = Array(filteredData)
+        //        print(#fileID, #function, #line, "데이터 체크용 프린트 \(filteredCakes)")
+        //        self.cakeListTableView.reloadData()
+    }
+    
+    //현재 브랜드만 구별하는 로직 구현
+    func classifyByCategoiresUsingFireBase(selectedBrand: String?, selectedFlavor: String?) {
         
-        let realm = try! Realm()
-        var filteredData = realm.objects(CakeData.self)
+        var filteredData: [cakeDataEntity] = []
+        let ref = Database.database().reference().child("cakeData")
+        
+        let brandFilteredSnapshot = ref.queryOrdered(byChild: "brand").queryEqual(toValue: selectedBrand)
+        let flavorFilteredSnapshot = ref.queryOrdered(byChild: "flavor").queryEqual(toValue: selectedFlavor)
+        let coupleCategoriesSnapshot = brandFilteredSnapshot.queryOrdered(byChild: "flavor").queryEqual(toValue: selectedFlavor)
         let exceptionHandlingBrandString: String = "브랜드 선택"
         let exceptionHandlingFlavorString: String = "케이크 맛 선택"
         
-        //가독성을 위해 옵셔널 바인딩을 사용
-        if let selectedBrand = selectedBrand, selectedBrand != exceptionHandlingBrandString  {
-            filteredData = filteredData.filter("brand == %@", selectedBrand)
-        }
+        print(#fileID, #function, #line, "about snapShot: \(brandFilteredSnapshot)")
+        print(#fileID, #function, #line, "about snapShot: \(flavorFilteredSnapshot)")
         
-        if let selectedFlavor = selectedFlavor, selectedFlavor != exceptionHandlingFlavorString {
-            filteredData = filteredData.filter("flavor == %@", selectedFlavor)
-        }
-        
-        if let selectedBrand = selectedBrand,selectedBrand != exceptionHandlingBrandString,
-           let selectedFlavor = selectedFlavor, selectedFlavor != exceptionHandlingFlavorString {
-            filteredData = filteredData.filter("brand == %@ AND flavor == %@", selectedBrand, selectedFlavor)
-        }
-        
-        if selectedBrand == exceptionHandlingBrandString &&
-            selectedFlavor == exceptionHandlingFlavorString {
+        // default경우
+        if selectedFlavor == exceptionHandlingFlavorString &&
+            selectedBrand == exceptionHandlingBrandString  {
             
-            print("테이블 빈처리")
-            // 존재하지 않는 조건을 필터링하여 빈 Results를 생성 항상 false를 만들어냄 -> 값이 안나옴
-            filteredData = filteredData.filter("brand == %@", String(selectedBrand ?? ""))
+            ref.observe(.value) { snapshot in
+                
+                for child in snapshot.children {
+                    
+                    let childSnapShot = child as? DataSnapshot
+                    
+                    let value = childSnapShot?.value as? NSDictionary
+                    
+                    let name = value?["name"] as? String ?? ""
+                    let brand = value?["brand"] as? String ?? ""
+                    let flavor = value?["flavor"] as? String ?? ""
+                    let kcal = value?["kcal"] as? String ?? ""
+                    let saturatedFat = value?["saturatedFat"] as? String ?? ""
+                    let sugar = value?["sugar"] as? String ?? ""
+                    let protein = value?["protein"] as? String ?? ""
+                    
+                    let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    
+                    filteredData.append(brandData)
+                    print(#fileID, #function, #line, "데이터를 출력 확인합니다11111\(filteredData)")
+                    print(#fileID, #function, #line, "데이터를 출력 확인합니다222222\(brandData)")
+                }
+            }
         }
-        self.filteredCakes = Array(filteredData)
-        print(#fileID, #function, #line, "데이터 체크용 프린트 \(filteredCakes)")
+        
+        //brand만 카테고리화 한경우
+        if selectedBrand != exceptionHandlingBrandString && selectedFlavor == exceptionHandlingFlavorString  {
+            
+            brandFilteredSnapshot.observe(.value) { snapshot in
+                
+                for child in snapshot.children {
+                    
+                    let childSnapShot = child as? DataSnapshot
+                    
+                    let value = childSnapShot?.value as? NSDictionary
+                    
+                    let name = value?["name"] as? String ?? ""
+                    let brand = value?["brand"] as? String ?? ""
+                    let flavor = value?["flavor"] as? String ?? ""
+                    let kcal = value?["kcal"] as? String ?? ""
+                    let saturatedFat = value?["saturatedFat"] as? String ?? ""
+                    let sugar = value?["sugar"] as? String ?? ""
+                    let protein = value?["protein"] as? String ?? ""
+                    
+                    let flavorData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    
+                    filteredData.append(flavorData)
+                    
+                    print(#fileID, #function, #line, "데이터를 출력 확인합니다11111\(filteredData)")
+                    print(#fileID, #function, #line, "데이터를 출력 확인합니다222222\(flavorData)")
+                }
+            }
+        }
+        
+        //flavor만 카테고리화 한경우
+        if selectedFlavor != exceptionHandlingFlavorString && selectedBrand == exceptionHandlingBrandString  {
+            
+            flavorFilteredSnapshot.observe(.value) { snapshot in
+                
+                for child in snapshot.children {
+                    
+                    let childSnapShot = child as? DataSnapshot
+                    
+                    let value = childSnapShot?.value as? NSDictionary
+                    
+                    let name = value?["name"] as? String ?? ""
+                    let brand = value?["brand"] as? String ?? ""
+                    let flavor = value?["flavor"] as? String ?? ""
+                    let kcal = value?["kcal"] as? String ?? ""
+                    let saturatedFat = value?["saturatedFat"] as? String ?? ""
+                    let sugar = value?["sugar"] as? String ?? ""
+                    let protein = value?["protein"] as? String ?? ""
+                    
+                    let defaultCategoriesData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    
+                    
+                    filteredData.append(defaultCategoriesData)
+                    print(#fileID, #function, #line, "데이터를 출력 확인합니다11111\(filteredData)")
+                    print(#fileID, #function, #line, "데이터를 출력 확인합니다222222\(defaultCategoriesData)")
+                }
+            }
+        }
+        
+        //brand, flavor 둘다 카테고리화 한경우
+        //여기 해결하기
+        print(#fileID, #function, #line, "내일 해야할 것")
+        if selectedBrand != exceptionHandlingBrandString && selectedFlavor != exceptionHandlingFlavorString  {
+            
+            ref.observe(.value) { snapshot in
+                
+                if let brandName = selectedBrand, let flavorName = selectedFlavor {
+                    
+                    for child in snapshot.children {
+                        
+                        let childSnapShot = child as? DataSnapshot
+                        
+                        let value = childSnapShot?.value as? NSDictionary
+                        
+                        let name = value?["name"] as? String ?? ""
+                        let brand = value?["brand"] as? String ?? ""
+                        let flavor = value?["flavor"] as? String ?? ""
+                        let kcal = value?["kcal"] as? String ?? ""
+                        let saturatedFat = value?["saturatedFat"] as? String ?? ""
+                        let sugar = value?["sugar"] as? String ?? ""
+                        let protein = value?["protein"] as? String ?? ""
+                        
+                        
+                        
+                        let brandWithFlavorData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                        
+                        
+                        filteredData.append(brandWithFlavorData)
+                        print(#fileID, #function, #line, "데이터를 출력 확인합니다11111\(filteredData)")
+                        print(#fileID, #function, #line, "데이터를 출력 확인합니다222222\(brandWithFlavorData)")
+                    }
+                }
+            }
+        }
+        
+        self.filteredCakes = filteredData
         self.cakeListTableView.reloadData()
+        print(#fileID, #function, #line, "필터링된 데이터 확인(filteredData): \n\(filteredData)")
+        
     }
 }
+

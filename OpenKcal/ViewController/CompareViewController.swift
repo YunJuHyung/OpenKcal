@@ -10,7 +10,7 @@ import FirebaseDatabase
 
 //케이크를 비교해서 어떤 케이크의 칼로리가 더 낮은지 볼 수 있는 화면입니다.
 class PrintSetCakeDataCell: CompareViewController {
-    func printTitleSetCakeDataCell(cake: CakeData) -> String {
+    func printTitleSetCakeDataCell(cake: cakeDataEntity) -> String {
         return
                 """
                 이름: \(cake.name)
@@ -30,7 +30,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
 
     
     
-    var leftSelectedCake: CakeData? // 선택된 케이크를 왼쪽 테이블 셀에 저장할 프로퍼티
+    var leftSelectedCake: cakeDataEntity? // 선택된 케이크를 왼쪽 테이블 셀에 저장할 프로퍼티
     //didSet으로 프로퍼티 값이 변경된 직후에 호출해서 조건부 확인
     {
         didSet {
@@ -47,7 +47,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         }
     }
     
-    var rightSelectedCake: CakeData? // 선택된 케이크를 오른쪽 테이블 셀에 저장할 프로퍼티
+    var rightSelectedCake: cakeDataEntity? // 선택된 케이크를 오른쪽 테이블 셀에 저장할 프로퍼티
     
     {
         didSet {
@@ -84,10 +84,10 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
             
             switch uiImageView {
             case cakeImageView1:
-                print(#fileID, #function, #line, "right TableView Set")
-                selectCakeVC.cakeDataCloserType = { [weak self] selectedCake in
+                print(#fileID, #function, #line, "left TableView Set")
+                selectCakeVC.cakeDataCloserType = { [weak self] cakeDataEntity in
                     // 선택된 케이크 데이터를 저장
-                    self?.leftSelectedCake = selectedCake
+                    self?.leftSelectedCake = cakeDataEntity
                     //선택된 케이크 이름과 일치하는 사진을 Assets에서 불러옴
                     
                     // 바꾼 addPlusImage
@@ -95,13 +95,13 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
                     self?.leftTableView.reloadData()
                 }
             case cakeImageView2:
-                print(#fileID, #function, #line, "left TableView Set")
-                selectCakeVC.cakeDataCloserType = { [weak self] selectedCake in
+                print(#fileID, #function, #line, "right TableView Set")
+                selectCakeVC.cakeDataCloserType = { [weak self] cakeDataEntity in
                     // 선택된 케이크 데이터를 저장
-                    self?.rightSelectedCake = selectedCake
+                    self?.rightSelectedCake = cakeDataEntity
                     // 필요한 로직 수행 (ex. 테이블 업데이트)
-                    self?.cakeImageView2.image =
-                    UIImage(named: selectedCake.name)
+//                    self?.cakeImageView2.image =
+//                    UIImage(named: selectedCake.name)
                     
                     self?.rightTableView.reloadData()
                 }
