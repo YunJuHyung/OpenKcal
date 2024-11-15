@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseStorage
 
 //케이크를 비교해서 어떤 케이크의 칼로리가 더 낮은지 볼 수 있는 화면입니다.
 class PrintSetCakeDataCell: CompareViewController {
@@ -27,7 +28,11 @@ class PrintSetCakeDataCell: CompareViewController {
 class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRecognizerDelegate {
     
     var ref: DatabaseReference?
-
+    
+    let storageRef = Storage.storage(url: "gs://openkcal.firebasestorage.app").reference()
+    
+    //로딩 인디케이터
+    var loadingIndicator = UIActivityIndicatorView()
     
     
     var leftSelectedCake: cakeDataEntity? // 선택된 케이크를 왼쪽 테이블 셀에 저장할 프로퍼티
@@ -67,7 +72,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     @IBOutlet weak var cakeImageView2: UIImageView!
     @IBOutlet weak var firstCakeImageBackgroundView: UIView!
     @IBOutlet weak var secondCakeImageBackgroundView: UIView!
-
+    
     @IBOutlet weak var viewEmbededTV: UIView!
     
     @IBOutlet weak var leftTableView: UITableView!
@@ -78,31 +83,69 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     
     @IBOutlet weak var TVResetButton: UIButton!
     
+    //케이크 이름과 일치하는 사진이름을 storage에서 가져옴
+    fileprivate func getImageDataFromStorage(cakeDataEntityName: String, completion: @escaping (UIImage?) -> Void){
+        
+        DispatchQueue.main.async {
+            self.loadingIndicator.startAnimating()
+           }
+        let storageReference = storageRef.child("images/\(cakeDataEntityName).png")
+        
+        storageReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.loadingIndicator.stopAnimating()
+                   }
+                print(#fileID, #function, #line, "Uh-oh, an error occurred! \(error.localizedDescription)")
+                
+            } else {
+                if let data = data {
+                    let image = UIImage(data: data)
+                    completion(image)
+                    DispatchQueue.main.async {
+                        self.loadingIndicator.stopAnimating()
+                       }
+                }
+            }
+        }
+        
+    }
+    
+    //MARK: -- 선택된 케이크와 일치하는 이름 = 사진을 저장할 때 name 파라미터 넘겨줘서 저장하기
     func navigateToSelectCakeViewController(uiImageView: UIImageView) {
         if let selectCakeVC = storyboard?.instantiateViewController(withIdentifier: "SelectCakeViewController") as? SelectCakeViewController {
-            print(#fileID, #function, #line, "케이크 선택 진입@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
             
             switch uiImageView {
             case cakeImageView1:
                 print(#fileID, #function, #line, "left TableView Set")
+                //VC를 참조하고 있는 클로저 타입을 약한 참조를 통해 메모리 누수 방지
                 selectCakeVC.cakeDataCloserType = { [weak self] cakeDataEntity in
-                    // 선택된 케이크 데이터를 저장
+                    
+                    //케이크 이미지 불러오기
+                    self?.getImageDataFromStorage(cakeDataEntityName: cakeDataEntity.name) { image in
+                        if let image = image {
+                            self?.cakeImageView1.image = image
+                        } else {
+                            print(#fileID, #function, #line, "imageError")
+                        }
+                    }
+                    //케이크 데이터 불러오기
                     self?.leftSelectedCake = cakeDataEntity
-                    //선택된 케이크 이름과 일치하는 사진을 Assets에서 불러옴
-                    
-                    // 바꾼 addPlusImage
-                    
                     self?.leftTableView.reloadData()
                 }
             case cakeImageView2:
                 print(#fileID, #function, #line, "right TableView Set")
                 selectCakeVC.cakeDataCloserType = { [weak self] cakeDataEntity in
                     // 선택된 케이크 데이터를 저장
+                    self?.getImageDataFromStorage(cakeDataEntityName: cakeDataEntity.name) { cakeImage in
+                        if let cakeImage = cakeImage {
+                            self?.cakeImageView2.image = cakeImage
+                        } else {
+                            print(#fileID, #function, #line, "imageError")
+                        }
+                    }
                     self?.rightSelectedCake = cakeDataEntity
-                    // 필요한 로직 수행 (ex. 테이블 업데이트)
-//                    self?.cakeImageView2.image =
-//                    UIImage(named: selectedCake.name)
-                    
                     self?.rightTableView.reloadData()
                 }
                 
@@ -132,7 +175,6 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "resuableCell", for: indexPath)
-        print(#fileID, #function, #line, "checkFuncTableViewCellForRowAt")
         
         
         if tableView == leftTableView, let cake = self.leftSelectedCake {
@@ -153,22 +195,29 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         return cell
     }
     
+    fileprivate func removeKcalBehind4String(KcalString: String) -> Int {
+        
+        guard KcalString.count >= 4 else {
+            print(#fileID, #function, #line, "\(KcalString.count) kcal 숫자추가안했음 ")
+            return -99
+        }
+        let onlyIntKcal = KcalString.dropLast(4)
+        let returnNum = Int(onlyIntKcal)
+        return returnNum ?? -98
+    }
+    
     //선택된 케이크 칼로리 비교 텍스트 만드는 메서드
     func makeLabelMessageCompareCaroies() {
         //케이꾸가 없음
-        print(#fileID, #function, #line, "진입한지 확인 ***********************")
         print("leftSelectedCake: \(String(describing: leftSelectedCake)), rightSelectedCake: \(String(describing: rightSelectedCake))")
         
         guard let leftCake = leftSelectedCake, let rightCake = rightSelectedCake else {
             showLessCaloriesLabel.text = "이미지 칸을 눌러 비교할 케이크를 선택해주세요!"
-            return
+            return print("칼로리 비교쪽 안들어간다")
         }
-        let leftCakeKcalInteger = Int(leftCake.kcal)
-        let rightCakeKcalInteger = Int(rightCake.kcal)
-        if let leftCakeKcalInteger = leftCakeKcalInteger,
-           let rightCakeKcalInteger = rightCakeKcalInteger {
-            print(#fileID, #function, #line, "진입한지 확인 %%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            
+        let leftCakeKcalInteger = removeKcalBehind4String(KcalString: leftCake.kcal)
+        let rightCakeKcalInteger = removeKcalBehind4String(KcalString: rightCake.kcal)
+
             if leftCakeKcalInteger < rightCakeKcalInteger {
                 let lowerKcal = rightCakeKcalInteger - leftCakeKcalInteger
                 showLessCaloriesLabel.text = "\(leftCake.name)의 칼로리가 \(lowerKcal)만큼 더 낮네요!🍰"
@@ -178,12 +227,17 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
             } else {
                 showLessCaloriesLabel.text = "두 케이크의 칼로리가 같네요!🍰"
             }
-        }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 로딩 인디케이터 설정
+                loadingIndicator = UIActivityIndicatorView(style: .large)
+                loadingIndicator.center = self.view.center // 화면 중앙에 배치
+                loadingIndicator.hidesWhenStopped = true // 중지되면 숨기기
+                self.view.addSubview(loadingIndicator)
         
         //파이어베이스 db가져오기
         ref = Database.database().reference()
@@ -215,7 +269,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-
+    
     
     private func setupGestureImageView() {
         // UITapGestureRecognizer를 생성하고, 액션 메서드 설정
@@ -238,7 +292,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     @objc private func imageViewTapped1() {
         // 터치 이벤트 처리
         
-        print("Image view tapped!")
+        print("Left Image view tapped!")
         //네비로 연결 하기
         navigateToSelectCakeViewController(uiImageView: cakeImageView1)
     }
@@ -246,7 +300,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     @objc private func imageViewTapped2() {
         // 터치 이벤트 처리
         
-        print("Image view tapped!")
+        print("Right Image view tapped!")
         //네비로 연결 하기
         navigateToSelectCakeViewController(uiImageView: cakeImageView2)
     }

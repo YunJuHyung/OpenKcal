@@ -61,6 +61,8 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     //closer사용할때 선택한 아이템을 넘겨줄때만 struct사용하고 아닐때는
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //        print(#fileID, #function, #line, "TableViewnumberOfRowsInSection\(self.filteredCakes)")
+        //        print(#fileID, #function, #line, "TableViewnumberOfRowsInSection NUMBER \(self.filteredCakes.count)")
         return self.filteredCakes.count
     }
     
@@ -81,8 +83,8 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         
         // 필터링된 케이크 데이터를 셀에 표시
         let cake = filteredCakes[indexPath.row]
-        print(#fileID, #function, #line, "테이블뷰 케이크 cake 확인합니다 \(cake)")
-        print(#fileID, #function, #line, "테이블뷰 케이크 filteredCakes 확인합니다 \(filteredCakes)")
+        //        print(#fileID, #function, #line, "테이블뷰 케이크 cake 확인합니다 \(cake)")
+        //        print(#fileID, #function, #line, "테이블뷰 케이크 filteredCakes 확인합니다 \(filteredCakes)")
         
         cell.textLabel?.text = cake.name
         //MARK: (수정필요) 아래 내용은 안나오긴함 detail칸 안만들었음
@@ -113,6 +115,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         cakeListTableView.delegate = self
         cakeListTableView.dataSource = self
         classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
+        self.cakeListTableView.reloadData()
         setupGestureImageView()
         
     }
@@ -225,7 +228,6 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                 //fireBase사용
                 classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
                 
-                print(#fileID, #function, #line, "self.")
                 //localDB용
                 //classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
             }
@@ -242,7 +244,8 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                 self.flavorDisplayLabel.text = item
                 
                 //                classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
-                
+                //fireBase사용
+                classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
             }
             
         default:
@@ -285,31 +288,27 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         //        self.cakeListTableView.reloadData()
     }
     
-    //현재 브랜드만 구별하는 로직 구현
+    
+    //MARK: -- Realtime DB에서 중복쿼리문이 안되서 다양한 방법을 구상해봤는데 결국 심플이즈 베스트더라~
+    // 서버에서 데이터를 받는게 느려서 Firebase dispatchGroup 사용 항상 데이터가 안들어오면 고려해야됨
     func classifyByCategoiresUsingFireBase(selectedBrand: String?, selectedFlavor: String?) {
         
         var filteredData: [cakeDataEntity] = []
         let ref = Database.database().reference().child("cakeData")
+        let dispatchGroup = DispatchGroup()
         
-        let brandFilteredSnapshot = ref.queryOrdered(byChild: "brand").queryEqual(toValue: selectedBrand)
-        let flavorFilteredSnapshot = ref.queryOrdered(byChild: "flavor").queryEqual(toValue: selectedFlavor)
-        let coupleCategoriesSnapshot = brandFilteredSnapshot.queryOrdered(byChild: "flavor").queryEqual(toValue: selectedFlavor)
         let exceptionHandlingBrandString: String = "브랜드 선택"
         let exceptionHandlingFlavorString: String = "케이크 맛 선택"
         
-        print(#fileID, #function, #line, "about snapShot: \(brandFilteredSnapshot)")
-        print(#fileID, #function, #line, "about snapShot: \(flavorFilteredSnapshot)")
-        
-        // default경우
-        if selectedFlavor == exceptionHandlingFlavorString &&
-            selectedBrand == exceptionHandlingBrandString  {
+        // 아무것도 선택하지 않은 상태
+        if selectedBrand == exceptionHandlingBrandString && selectedFlavor == exceptionHandlingFlavorString {
+            dispatchGroup.enter()
             
+            // 기본 쿼리로 모든 데이터를 가져옴
             ref.observe(.value) { snapshot in
-                
                 for child in snapshot.children {
                     
                     let childSnapShot = child as? DataSnapshot
-                    
                     let value = childSnapShot?.value as? NSDictionary
                     
                     let name = value?["name"] as? String ?? ""
@@ -323,21 +322,23 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                     let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
                     
                     filteredData.append(brandData)
-                    print(#fileID, #function, #line, "데이터를 출력 확인합니다11111\(filteredData)")
-                    print(#fileID, #function, #line, "데이터를 출력 확인합니다222222\(brandData)")
+                    
                 }
+                dispatchGroup.leave() // 비동기 작업 후 leave 호출
             }
+            
         }
         
-        //brand만 카테고리화 한경우
-        if selectedBrand != exceptionHandlingBrandString && selectedFlavor == exceptionHandlingFlavorString  {
+        // 브랜드만 필터링
+        if selectedBrand != exceptionHandlingBrandString && selectedFlavor == exceptionHandlingFlavorString {
+            dispatchGroup.enter()
+            
+            let brandFilteredSnapshot = ref.queryOrdered(byChild: "brand").queryEqual(toValue: selectedBrand)
             
             brandFilteredSnapshot.observe(.value) { snapshot in
-                
                 for child in snapshot.children {
                     
                     let childSnapShot = child as? DataSnapshot
-                    
                     let value = childSnapShot?.value as? NSDictionary
                     
                     let name = value?["name"] as? String ?? ""
@@ -348,25 +349,27 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                     let sugar = value?["sugar"] as? String ?? ""
                     let protein = value?["protein"] as? String ?? ""
                     
-                    let flavorData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
                     
-                    filteredData.append(flavorData)
+                    filteredData.append(brandData)
                     
-                    print(#fileID, #function, #line, "데이터를 출력 확인합니다11111\(filteredData)")
-                    print(#fileID, #function, #line, "데이터를 출력 확인합니다222222\(flavorData)")
                 }
+                dispatchGroup.leave()
             }
+            
         }
         
-        //flavor만 카테고리화 한경우
-        if selectedFlavor != exceptionHandlingFlavorString && selectedBrand == exceptionHandlingBrandString  {
+        // 맛만 필터링
+        if selectedFlavor != exceptionHandlingFlavorString && selectedBrand == exceptionHandlingBrandString {
+            dispatchGroup.enter()
+            
+            let flavorFilteredSnapshot = ref.queryOrdered(byChild: "flavor").queryEqual(toValue: selectedFlavor)
             
             flavorFilteredSnapshot.observe(.value) { snapshot in
-                
                 for child in snapshot.children {
                     
-                    let childSnapShot = child as? DataSnapshot
                     
+                    let childSnapShot = child as? DataSnapshot
                     let value = childSnapShot?.value as? NSDictionary
                     
                     let name = value?["name"] as? String ?? ""
@@ -377,56 +380,55 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                     let sugar = value?["sugar"] as? String ?? ""
                     let protein = value?["protein"] as? String ?? ""
                     
-                    let defaultCategoriesData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
                     
+                    filteredData.append(brandData)
                     
-                    filteredData.append(defaultCategoriesData)
-                    print(#fileID, #function, #line, "데이터를 출력 확인합니다11111\(filteredData)")
-                    print(#fileID, #function, #line, "데이터를 출력 확인합니다222222\(defaultCategoriesData)")
                 }
+                dispatchGroup.leave() // 비동기 작업 후 leave 호출
             }
+            
         }
         
-        //brand, flavor 둘다 카테고리화 한경우
-        //여기 해결하기
-        print(#fileID, #function, #line, "내일 해야할 것")
-        if selectedBrand != exceptionHandlingBrandString && selectedFlavor != exceptionHandlingFlavorString  {
+        // 브랜드와 맛 둘 다 필터링
+        if selectedBrand != exceptionHandlingBrandString && selectedFlavor != exceptionHandlingFlavorString {
+            dispatchGroup.enter()
             
-            ref.observe(.value) { snapshot in
-                
-                if let brandName = selectedBrand, let flavorName = selectedFlavor {
+            let brandFilteredSnapshot = ref.queryOrdered(byChild: "brand").queryEqual(toValue: selectedBrand)
+            
+            brandFilteredSnapshot.observe(.value) { snapshot in
+                for child in snapshot.children {
                     
-                    for child in snapshot.children {
-                        
-                        let childSnapShot = child as? DataSnapshot
-                        
-                        let value = childSnapShot?.value as? NSDictionary
-                        
-                        let name = value?["name"] as? String ?? ""
-                        let brand = value?["brand"] as? String ?? ""
-                        let flavor = value?["flavor"] as? String ?? ""
-                        let kcal = value?["kcal"] as? String ?? ""
-                        let saturatedFat = value?["saturatedFat"] as? String ?? ""
-                        let sugar = value?["sugar"] as? String ?? ""
-                        let protein = value?["protein"] as? String ?? ""
-                        
-                        
-                        
-                        let brandWithFlavorData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
-                        
-                        
-                        filteredData.append(brandWithFlavorData)
-                        print(#fileID, #function, #line, "데이터를 출력 확인합니다11111\(filteredData)")
-                        print(#fileID, #function, #line, "데이터를 출력 확인합니다222222\(brandWithFlavorData)")
+                    let childSnapShot = child as? DataSnapshot
+                    let value = childSnapShot?.value as? NSDictionary
+                    
+                    let name = value?["name"] as? String ?? ""
+                    let brand = value?["brand"] as? String ?? ""
+                    let flavor = value?["flavor"] as? String ?? ""
+                    let kcal = value?["kcal"] as? String ?? ""
+                    let saturatedFat = value?["saturatedFat"] as? String ?? ""
+                    let sugar = value?["sugar"] as? String ?? ""
+                    let protein = value?["protein"] as? String ?? ""
+                    
+                    let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    
+                    // realtime DB는 중복쿼리가 안되는 관계로 한참 고민하다가 낸게 그냥 if문으로 거르기
+                    if brandData.flavor == selectedFlavor {
+                        filteredData.append(brandData)
+                        print(brandData)
                     }
                 }
+                dispatchGroup.leave() // 비동기 작업 후 leave 호출
             }
         }
         
-        self.filteredCakes = filteredData
-        self.cakeListTableView.reloadData()
-        print(#fileID, #function, #line, "필터링된 데이터 확인(filteredData): \n\(filteredData)")
-        
+        // 비동기 처리 끝난 후
+        dispatchGroup.notify(queue: .main) {
+            print("filteredCakes 데이터: \(filteredData)")
+            self.filteredCakes = filteredData
+            self.cakeListTableView.reloadData()
+        }
     }
+    
 }
 

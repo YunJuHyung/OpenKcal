@@ -24,11 +24,12 @@
 		F4858E6E2C8710C600A5B878 /* OpenKcalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E6D2C8710C600A5B878 /* OpenKcalUITests.swift */; };
 		F4858E702C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4858E6F2C8710C600A5B878 /* OpenKcalUITestsLaunchTests.swift */; };
 		F4893A5B2C95745E00FFB1FF /* CreateCakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4893A5A2C95745E00FFB1FF /* CreateCakeViewController.swift */; };
+		F49C67902CE3407B00D8D709 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F49C678F2CE3407B00D8D709 /* FirebaseFirestore */; };
+		F49C67922CE3479200D8D709 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F49C67912CE3479200D8D709 /* FirebaseStorage */; };
 		F4A335092CCF6DB0002069C2 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4A335082CCF6DB0002069C2 /* FirebaseAnalytics */; };
 		F4A3350B2CCF6DB0002069C2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F4A3350A2CCF6DB0002069C2 /* FirebaseAuth */; };
 		F4A3350D2CCF6DB0002069C2 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F4A3350C2CCF6DB0002069C2 /* FirebaseCore */; };
 		F4A3350F2CCF6DB0002069C2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = F4A3350E2CCF6DB0002069C2 /* FirebaseDatabase */; };
-		F4A335112CCF6DB0002069C2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F4A335102CCF6DB0002069C2 /* FirebaseFirestore */; };
 		F4A335132CCF8523002069C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4A335122CCF8523002069C2 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -89,8 +90,9 @@
 				F4A3350D2CCF6DB0002069C2 /* FirebaseCore in Frameworks */,
 				7BDBBB50E4A44D80051FF625 /* Pods_OpenKcal.framework in Frameworks */,
 				F4A335092CCF6DB0002069C2 /* FirebaseAnalytics in Frameworks */,
+				F49C67922CE3479200D8D709 /* FirebaseStorage in Frameworks */,
 				F4A3350B2CCF6DB0002069C2 /* FirebaseAuth in Frameworks */,
-				F4A335112CCF6DB0002069C2 /* FirebaseFirestore in Frameworks */,
+				F49C67902CE3407B00D8D709 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +236,8 @@
 				F4A3350A2CCF6DB0002069C2 /* FirebaseAuth */,
 				F4A3350C2CCF6DB0002069C2 /* FirebaseCore */,
 				F4A3350E2CCF6DB0002069C2 /* FirebaseDatabase */,
-				F4A335102CCF6DB0002069C2 /* FirebaseFirestore */,
+				F49C678F2CE3407B00D8D709 /* FirebaseFirestore */,
+				F49C67912CE3479200D8D709 /* FirebaseStorage */,
 			);
 			productName = OpenKcal;
 			productReference = F4858E492C8710C400A5B878 /* OpenKcal.app */;
@@ -845,6 +848,16 @@
 			package = F43FB0822C9D63A100B36E66 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
+		F49C678F2CE3407B00D8D709 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		F49C67912CE3479200D8D709 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		F4A335082CCF6DB0002069C2 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -864,11 +877,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
-		};
-		F4A335102CCF6DB0002069C2 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F4A335072CCF6DB0002069C2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
