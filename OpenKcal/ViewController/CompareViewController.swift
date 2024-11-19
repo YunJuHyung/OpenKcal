@@ -66,6 +66,10 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     }
     var plusImageView: UIImageView?
     
+    @IBOutlet weak var leftLowStarImage: UIImageView!
+    
+    @IBOutlet weak var rightLowStarImage: UIImageView!
+    
     @IBOutlet weak var leftCakeSubView: UIImageView!
     @IBOutlet weak var rightCakeSubView: UIImageView!
     @IBOutlet weak var cakeImageView1: UIImageView!
@@ -175,7 +179,8 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "resuableCell", for: indexPath)
-        
+        cell.selectionStyle = .none
+
         
         if tableView == leftTableView, let cake = self.leftSelectedCake {
             let printingListCell = PrintSetCakeDataCell()
@@ -209,6 +214,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     //선택된 케이크 칼로리 비교 텍스트 만드는 메서드
     func makeLabelMessageCompareCaroies() {
         //케이꾸가 없음
+        let attributeText = NSMutableAttributedString()
         print("leftSelectedCake: \(String(describing: leftSelectedCake)), rightSelectedCake: \(String(describing: rightSelectedCake))")
         
         guard let leftCake = leftSelectedCake, let rightCake = rightSelectedCake else {
@@ -220,12 +226,32 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
 
             if leftCakeKcalInteger < rightCakeKcalInteger {
                 let lowerKcal = rightCakeKcalInteger - leftCakeKcalInteger
-                showLessCaloriesLabel.text = "\(leftCake.name)의 칼로리가 \(lowerKcal)만큼 더 낮네요!🍰"
+                
+                showLessCaloriesLabel.attributedText =
+                attributeText.normal("\(leftCake.name)의 칼로리가 ")
+                    .normalButColorAndBold("\(lowerKcal) ")
+                    .normal("만큼 더 낮네요!🍰")
+                
+                leftLowStarImage.transform = .init(rotationAngle: .pi / -8)
+                leftLowStarImage.isHidden = false
+                rightLowStarImage.isHidden = true
+                
             } else if rightCakeKcalInteger < leftCakeKcalInteger {
                 let lowerKcal = leftCakeKcalInteger - rightCakeKcalInteger
-                showLessCaloriesLabel.text = "\(rightCake.name)의 칼로리가 \(lowerKcal)만큼 더 낮네요!🍰"
+                //showLessCaloriesLabel.text = "\(rightCake.name)의 칼로리가 \(lowerKcal)만큼 더 낮네요!🍰"
+                
+                showLessCaloriesLabel.attributedText =
+                attributeText.normal("\(rightCake.name)의 칼로리가 ")
+                    .normalButColorAndBold("\(lowerKcal) ")
+                    .normal("만큼 더 낮네요!🍰")
+                
+                let radians: CGFloat = .pi / -8
+                rightLowStarImage.transform = CGAffineTransform(rotationAngle: radians)
+                rightLowStarImage.isHidden = false
+                leftLowStarImage.isHidden = true
+                
             } else {
-                showLessCaloriesLabel.text = "두 케이크의 칼로리가 같네요!🍰"
+                showLessCaloriesLabel.attributedText = attributeText.normal("두 케이크의 칼로리가 같네요!🍰")
             }
     }
     
@@ -257,6 +283,8 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         cakeImageView2.image = nil
         leftCakeSubView.isHidden = false
         rightCakeSubView.isHidden = false
+        leftLowStarImage.isHidden = true
+        rightLowStarImage.isHidden = true
         showLessCaloriesLabel.text = "이미지 칸을 눌러 비교할 케이크를 선택해주세요!"
         self.leftSelectedCake = nil
         self.rightSelectedCake = nil
@@ -319,3 +347,79 @@ extension UIView {
         self.layer.masksToBounds = false
     }
 }
+
+//MARK: -- 적용되는 몽글몽글한 폰트 찾기 + attributeText unused 수정하기
+extension NSMutableAttributedString {
+    var fontSize:CGFloat { return 20 }
+    var highlightfontSize:CGFloat { return 26 }
+    var boldFont:UIFont { return UIFont(name: "SF Pro Rounded", size: fontSize) ?? UIFont.boldSystemFont(ofSize: fontSize) }
+    var normalFont:UIFont { return UIFont(name: "HelveticaNeue", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)}
+    var normalFontBold:UIFont { return UIFont(name: "HelveticaNeue-Bold", size: highlightfontSize) ?? UIFont.systemFont(ofSize: highlightfontSize)}
+    
+    func bold(_ value:String) -> NSMutableAttributedString {
+        
+        let attributes:[NSAttributedString.Key : Any] = [
+            .font : boldFont
+                
+        ]
+        
+        self.append(NSAttributedString(string: value, attributes:attributes))
+        return self
+    }
+    
+    func normal(_ value:String) -> NSMutableAttributedString {
+        
+        let attributes:[NSAttributedString.Key : Any] = [
+            .font : normalFont,
+            .foregroundColor: UIColor.black
+            
+        ]
+        
+        self.append(NSAttributedString(string: value, attributes:attributes))
+        return self
+    }
+    
+    
+    func normalButColorAndBold(_ value:String) -> NSMutableAttributedString {
+        
+        let attributes:[NSAttributedString.Key : Any] = [
+            .font : normalFontBold,
+            .foregroundColor : UIColor.blue,
+            
+        ]
+        
+        self.append(NSAttributedString(string: value, attributes:attributes))
+        return self
+    }
+    
+}
+    
+
+extension CGFloat {
+    var degreesToRadians: CGFloat {
+        return self * .pi / 180
+    }
+}
+
+
+func changeAttributeString(text: String, highlightText: String) -> NSAttributedString {
+    // NSMutableAttributedString 생성
+    let attributeString = NSMutableAttributedString(string: text)
+    
+    
+
+//    // highlightText의 Range 찾기
+//    if let specifiedRange = text.range(of: highlightText) {
+//        // NSRange로 변환
+//        let nsRange = NSRange(specifiedRange, in: text)
+//        
+//        // 스타일 지정
+//        attributeString.addAttributes([
+//            .foregroundColor: UIColor.blue, // 텍스트 색상
+//            .font: UIFont.boldSystemFont(ofSize: 18) // 폰트 스타일
+//        ], range: nsRange)
+//    }
+    
+    return attributeString
+}
+
