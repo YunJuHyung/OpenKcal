@@ -15,6 +15,7 @@ class PrintSetCakeDataCell: CompareViewController {
         return
                 """
                 이름: \(cake.name)
+                브랜드: \(cake.brand)
                 맛: \(cake.flavor)
                 칼로리: \(cake.kcal)
                 당: \(cake.sugar)

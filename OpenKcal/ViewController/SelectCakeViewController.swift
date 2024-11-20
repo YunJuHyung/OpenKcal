@@ -88,7 +88,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         
         cell.textLabel?.text = cake.name
         //MARK: (수정필요) 아래 내용은 안나오긴함 detail칸 안만들었음
-        cell.detailTextLabel?.text = "Flavor: \(cake.flavor), Kcal: \(cake.kcal)"
+//        cell.detailTextLabel?.text = "Flavor: \(cake.flavor), Kcal: \(cake.kcal)"
         
         return cell
     }
