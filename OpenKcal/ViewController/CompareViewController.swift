@@ -252,6 +252,8 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
                 
             } else {
                 showLessCaloriesLabel.attributedText = attributeText.normal("두 케이크의 칼로리가 같네요!🍰")
+                leftLowStarImage.isHidden = true
+                rightLowStarImage.isHidden = true
             }
     }
     

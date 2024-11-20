@@ -44,7 +44,7 @@ class CreateCakeViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var insertCakeImageView: UIImageView!
     
     
-    //  파이어베이스 케이크 정보 생성
+    // realm Create 메소드
     func createCakeData(nameData: String?, brandData: String?, flavorData: String?, kcalData: String?, saturatedFatData: String?, sugarData: String?, proteinData: String?) {
         let realm = try! Realm()
         
@@ -118,6 +118,7 @@ class CreateCakeViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
+    //Realm delete 메소드
     @IBAction func deleteCakeDBAll(_ sender: UIButton) {
         //local DB 삭제
         let realm = try! Realm()
