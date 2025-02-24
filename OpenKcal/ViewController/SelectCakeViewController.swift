@@ -6,47 +6,25 @@
 //
 
 import DropDown
-import UIKit
 import RealmSwift
 import SwiftUI
 import FirebaseDatabase
 import FirebaseFirestore
+import Combine
 
-struct cakeDataEntity {
-    var name: String = ""
-    var brand: String = ""
-    var flavor: String = ""
-    var kcal: String = ""
-    var saturatedFat: String = ""
-    var sugar: String = ""
-    var protein: String = ""
-}
 //케이크의 카테고리를 필터링해서 선택하는 화면입니다.
 class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     
-    var filteredCakes: [cakeDataEntity] = [] // 필터링된 케이크 데이터를 저장할 배열
+//    var filteredCakes: [CakeDataEntity] = [] // 필터링된 케이크 데이터를 저장할 배열
     let cakeData = CakeData()
     let imageView = UIImageView()
+    private let viewModel = SelectCakeViewModel()
+    private var cancellables = Set<AnyCancellable>()
+    
     
     // let refHandle = self.ref?.child("cakeData")
-    
-    
-    
-    // dropdown에 들어가는 text
-    let dropDownBrandMenu = [
-        "브랜드 선택",
-        "스타벅스",
-        "투썸플레이스",
-        "이디야",
-    ]
-    let dropDownFlavorMenu = [
-        "케이크 맛 선택",
-        "초코",
-        "생크림",
-        "치즈",
-    ]
-    
+     
     @IBOutlet weak var cakeListTableView: UITableView!
     
     @IBOutlet weak var brandDropDownView: UIView!
@@ -56,18 +34,18 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     
     @IBOutlet weak var brandDropDownButton: UIButton!
     @IBOutlet weak var flavorDropDownButton: UIButton!
-    var cakeDataCloserType: ((cakeDataEntity) -> Void)?
+    var cakeDataCloserType: ((CakeDataEntity) -> Void)?
     
     //closer사용할때 선택한 아이템을 넘겨줄때만 struct사용하고 아닐때는
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //        print(#fileID, #function, #line, "TableViewnumberOfRowsInSection\(self.filteredCakes)")
         //        print(#fileID, #function, #line, "TableViewnumberOfRowsInSection NUMBER \(self.filteredCakes.count)")
-        return self.filteredCakes.count
+        return viewModel.filteredCakes.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCake = self.filteredCakes[indexPath.row]
+        let selectedCake = viewModel.filteredCakes[indexPath.row]
         
         if let cakeDataCloserType = cakeDataCloserType{
             cakeDataCloserType(selectedCake)
@@ -82,13 +60,11 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "CakeDataCell", for: indexPath)
         
         // 필터링된 케이크 데이터를 셀에 표시
-        let cake = filteredCakes[indexPath.row]
-        //        print(#fileID, #function, #line, "테이블뷰 케이크 cake 확인합니다 \(cake)")
+        let cake = viewModel.filteredCakes[indexPath.row]
+                print(#fileID, #function, #line, "테이블뷰 케이크 cake 확인합니다 \(cake)")
         //        print(#fileID, #function, #line, "테이블뷰 케이크 filteredCakes 확인합니다 \(filteredCakes)")
         
         cell.textLabel?.text = cake.name
-        //MARK: (수정필요) 아래 내용은 안나오긴함 detail칸 안만들었음
-//        cell.detailTextLabel?.text = "Flavor: \(cake.flavor), Kcal: \(cake.kcal)"
         
         return cell
     }
@@ -114,11 +90,20 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         super.viewDidLoad()
         cakeListTableView.delegate = self
         cakeListTableView.dataSource = self
-        classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
-        self.cakeListTableView.reloadData()
+        viewModel.classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
         setupGestureImageView()
-        
+        bindViewModel()
     }
+    
+    private func bindViewModel() {
+        print(#fileID, #function, #line, "check bindViewModel")
+            viewModel.$filteredCakes
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    self?.cakeListTableView.reloadData()
+                }
+                .store(in: &cancellables)
+        }
     
     // tableview 가 비어있을시 이미지와 라벨로 카테고리를 선택하게 유도할려고 했음
     // tableview에는 이미지 덮어씌우기 불가능
@@ -182,9 +167,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     
     @objc private func clickDropDownAction(_ sender: UITapGestureRecognizer? = nil) {
         
-        
         let dropDownView = DropDown() // DropDown 인스턴스 생성
-        
         
         dropDownView.cellHeight = 40 // 각 칸의 높이
         dropDownView.backgroundColor = .systemOrange
@@ -213,7 +196,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         
         switch sender {
         case brandDropDownView:
-            dropDownView.dataSource = self.dropDownBrandMenu // 어떤 데이터를 보여줄건지
+            dropDownView.dataSource = CakeFilterOptions.dropDownBrandMenu // 어떤 데이터를 보여줄건지
             // 어느 뷰 위치에 넣을것인지
             
             dropDownView.anchorView = self.brandDropDownView
@@ -226,14 +209,16 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                 
                 
                 //fireBase사용
-                classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
+                viewModel.classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
+                
+                
                 
                 //localDB용
                 //classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
             }
             
         case flavorDropDownView :
-            dropDownView.dataSource = self.dropDownFlavorMenu // 어떤 데이터를 보여줄건지
+            dropDownView.dataSource = CakeFilterOptions.dropDownFlavorMenu // 어떤 데이터를 보여줄건지
             
             dropDownView.anchorView = self.flavorDropDownView
             // 어느 뷰 위치에 넣을것인지
@@ -245,16 +230,18 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                 
                 //                classifyByCategoires(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
                 //fireBase사용
-                classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
-            }
+                viewModel.classifyByCategoiresUsingFireBase(selectedBrand: self.brandDisplayLabel.text, selectedFlavor: self.flavorDisplayLabel.text)
+                
+           }
             
         default:
             print("default messages")
         }
-        
+        self.cakeListTableView.reloadData()
+
     }
     
-    //MARK: -- after filterDropDownButton set filtering tableCellData 메소드
+    //MARK: -- Realm after filterDropDownButton set filtering tableCellData 메소드
     func classifyByCategoires(selectedBrand: String?, selectedFlavor: String?) {
         //
         //        let realm = try! Realm()
@@ -293,7 +280,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     // 서버에서 데이터를 받는게 느려서 Firebase dispatchGroup 사용 항상 데이터가 안들어오면 고려해야됨
     func classifyByCategoiresUsingFireBase(selectedBrand: String?, selectedFlavor: String?) {
         
-        var filteredData: [cakeDataEntity] = []
+        var filteredData: [CakeDataEntity] = []
         let ref = Database.database().reference().child("cakeData")
         let dispatchGroup = DispatchGroup()
         
@@ -319,7 +306,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                     let sugar = value?["sugar"] as? String ?? ""
                     let protein = value?["protein"] as? String ?? ""
                     
-                    let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    let brandData = CakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
                     
                     filteredData.append(brandData)
                     
@@ -349,7 +336,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                     let sugar = value?["sugar"] as? String ?? ""
                     let protein = value?["protein"] as? String ?? ""
                     
-                    let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    let brandData = CakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
                     
                     filteredData.append(brandData)
                     
@@ -380,7 +367,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                     let sugar = value?["sugar"] as? String ?? ""
                     let protein = value?["protein"] as? String ?? ""
                     
-                    let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    let brandData = CakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
                     
                     filteredData.append(brandData)
                     
@@ -410,7 +397,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
                     let sugar = value?["sugar"] as? String ?? ""
                     let protein = value?["protein"] as? String ?? ""
                     
-                    let brandData = cakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
+                    let brandData = CakeDataEntity(name: name, brand: brand, flavor: flavor, kcal: kcal, saturatedFat: saturatedFat, sugar: sugar, protein: protein)
                     
                     // realtime DB는 중복쿼리가 안되는 관계로 한참 고민하다가 낸게 그냥 if문으로 거르기
                     if brandData.flavor == selectedFlavor {
@@ -425,10 +412,13 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
         // 비동기 처리 끝난 후
         dispatchGroup.notify(queue: .main) {
             print("filteredCakes 데이터: \(filteredData)")
-            self.filteredCakes = filteredData
+            self.viewModel.filteredCakes = filteredData
             self.cakeListTableView.reloadData()
         }
     }
+    
+
+
     
 }
 
