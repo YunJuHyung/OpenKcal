@@ -1,0 +1,6 @@
+framework module Pods_OpenKcal {
+  umbrella header "Pods-OpenKcal-umbrella.h"
+
+  export *
+  module * { export * }
+}
