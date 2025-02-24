@@ -16,7 +16,6 @@ import FirebaseStorage
 
 
 //케이크 데이터를 생성하는 화면입니다.
-//realm은 사용하지 않음으로 데이터를 추가할때만 스토리보드에서 화면 연결을 통해 데이터 생성해도됨
 class CreateCakeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     // Get a reference to the storage service using the default Firebase App
     

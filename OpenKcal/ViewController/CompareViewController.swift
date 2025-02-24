@@ -11,7 +11,7 @@ import FirebaseStorage
 
 //케이크를 비교해서 어떤 케이크의 칼로리가 더 낮은지 볼 수 있는 화면입니다.
 class PrintSetCakeDataCell: CompareViewController {
-    func printTitleSetCakeDataCell(cake: CakeDataEntity) -> String {
+    func printTitleSetCakeDataCell(cake: cakeDataEntity) -> String {
         return
                 """
                 이름: \(cake.name)
@@ -36,7 +36,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     var loadingIndicator = UIActivityIndicatorView()
     
     
-    var leftSelectedCake: CakeDataEntity? // 선택된 케이크를 왼쪽 테이블 셀에 저장할 프로퍼티
+    var leftSelectedCake: cakeDataEntity? // 선택된 케이크를 왼쪽 테이블 셀에 저장할 프로퍼티
     //didSet으로 프로퍼티 값이 변경된 직후에 호출해서 조건부 확인
     {
         didSet {
@@ -53,7 +53,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
         }
     }
     
-    var rightSelectedCake: CakeDataEntity? // 선택된 케이크를 오른쪽 테이블 셀에 저장할 프로퍼티
+    var rightSelectedCake: cakeDataEntity? // 선택된 케이크를 오른쪽 테이블 셀에 저장할 프로퍼티
     
     {
         didSet {
