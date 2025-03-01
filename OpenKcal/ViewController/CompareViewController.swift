@@ -67,6 +67,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     }
     var plusImageView: UIImageView?
     
+    @IBOutlet weak var navigationvarItem: UINavigationItem!
     @IBOutlet weak var leftLowStarImage: UIImageView!
     
     @IBOutlet weak var rightLowStarImage: UIImageView!
@@ -88,7 +89,7 @@ class CompareViewController: UIViewController,UITableViewDataSource,UIGestureRec
     
     @IBOutlet weak var TVResetButton: UIButton!
     
-    //케이크 이름과 일치하는 사진이름을 storage에서 가져옴
+    //케이크 이름과 일치하는 사진이름을 storage에서 가져옴 파베
     fileprivate func getImageDataFromStorage(cakeDataEntityName: String, completion: @escaping (UIImage?) -> Void){
         
         DispatchQueue.main.async {
@@ -349,6 +350,7 @@ extension UIView {
         self.layer.shadowRadius = 4
         self.layer.masksToBounds = false
     }
+    
 }
 
 //MARK: -- 적용되는 몽글몽글한 폰트 찾기 + attributeText unused 수정하기
@@ -374,7 +376,7 @@ extension NSMutableAttributedString {
         
         let attributes:[NSAttributedString.Key : Any] = [
             .font : normalFont,
-            .foregroundColor: UIColor.black
+            
             
         ]
         

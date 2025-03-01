@@ -46,7 +46,7 @@ class SelectCakeViewController: UIViewController,UITableViewDataSource,UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCake = viewModel.filteredCakes[indexPath.row]
-        
+    
         if let cakeDataCloserType = cakeDataCloserType{
             cakeDataCloserType(selectedCake)
         }

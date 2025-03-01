@@ -175,10 +175,10 @@
 		F47C3C192D6CDA600069B47E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				F47C3C122D6CDA600069B47E /* CompareViewController.swift */,
-				F47C3C132D6CDA600069B47E /* CreateCakeViewController.swift */,
 				F47C3C152D6CDA600069B47E /* MainViewController.swift */,
+				F47C3C122D6CDA600069B47E /* CompareViewController.swift */,
 				F47C3C172D6CDA600069B47E /* SelectCakeViewController.swift */,
+				F47C3C132D6CDA600069B47E /* CreateCakeViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
